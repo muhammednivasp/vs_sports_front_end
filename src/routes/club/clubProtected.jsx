@@ -1,9 +1,30 @@
-// import React from 'react'
-// import { Navigate } from 'react-router-dom';
-// import toast from 'react-hot-toast'
-
+import React, { useLayoutEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast'
+import axios from 'axios';
+import { clubApi } from '../../utils/api';
+import { setClubDetails } from '../../redux/clubDataSlice'
+import { useDispatch } from 'react-redux';
 
 function ClubProtect(props) {
+  const navigate = useNavigate()
+const dispatch = useDispatch
+ clubApi.post('/auth').then((res)=>{
+  console.log(res,"res");
+ }).catch((err)=>{
+  console.log(err,"err");
+  localStorage.removeItem('clubToken')
+  dispatch(setClubDetails({
+    id: '',
+    email: '',
+    isUser:'',
+    name:'',
+    clubRegisterNo: '',
+    location: '',
+  }))
+  navigate('/')
+ })
+
 
   if (localStorage.getItem('clubToken')) {
     return props.children;

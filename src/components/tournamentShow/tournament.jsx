@@ -7,6 +7,9 @@ import secondimg from '../../assets/images/player/secondimg.webp'
 import threeimg from '../../assets/images/player/threeimg.avif'
 import bw2 from '../../assets/images/player/bw2.avif'
 import bw1 from '../../assets/images/player/bw1.jpg'
+import blackyone from '../../assets/images/player/blacky1.avif'
+import blackytwo from '../../assets/images/player/blackycenter.avif'
+import blackythree from '../../assets/images/player/blackyright.avif'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -34,7 +37,7 @@ function Tournaments({ data }) {
       <ul className="mt-10 pb-8 px-[4rem] w-full flex overflow-x-auto gap-4 snap-x">
         <li className="snap-center">
           <button onClick={() => Tournamentsview(data)}>
-            <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${secondimg})` }}>
+            <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${blackyone})` }}>
               {/* <img src={bw1} alt="" className="absolute inset-0 w-full h-full object-cover object-bottom" /> */}
               <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-black/75"></div>
               <div className="relative h-40 w-[580px] p-12 flex flex-col justify-between items-start">
@@ -55,7 +58,7 @@ function Tournaments({ data }) {
         </li>
         <li className="snap-center">
         <button onClick={() => Tournamentsview(data)}>
-        <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${fiveimg})` }}>
+        <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${blackytwo})` }}>
             {/* <img src={fiveimg} alt="" className="absolute inset-0 w-full h-full object-cover object-bottom" /> */}
             <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-black/75"></div>
             <div className="relative h-40 w-[580px] p-12 flex flex-col justify-between items-start">
@@ -72,7 +75,7 @@ function Tournaments({ data }) {
         </li>
         <li className="snap-center">
         <button onClick={() => ClubsView(data)}>
-        <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${threeimg})` }}>
+        <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${blackythree})` }}>
             {/* <img src={threeimg} alt="" className="absolute inset-0 w-full h-full object-cover object-bottom" /> */}
             <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-black/75"></div>
             <div className="relative h-40 w-[580px] p-12 flex flex-col justify-between items-start">

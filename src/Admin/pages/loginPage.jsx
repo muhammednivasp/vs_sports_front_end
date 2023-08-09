@@ -103,50 +103,6 @@ const LoginPage = () => {
 
 
 
-
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
-
-  // const handleForgotPasswordSubmit = async () => {
-
-  //   console.log('Forgot Password form submitted');
-  //   console.log('Email:', forgotPasswordEmail);
-
-  //   let valueof = { email: forgotPasswordEmail, isUser: isClub }
-  //   console.log(valueof, "kopkpkpk")
-  //   try {
-
-  //     const { data } = await (isClub === 'user'
-  //       ? userApi.post('/forgot', valueof, { withCredentials: true })
-  //       : clubApi.post('/clubforgot', valueof, { withCredentials: true }))
-  //     console.log(data, "dsdsdsd")
-
-  //     console.log(data, "datassss")
-  //     if (data) {
-  //       if (data.errors) {
-  //         toast.error(data.message);
-  //       } else {
-  //         toast.success(data.message);
-  //         // setTimeout(() => {
-  //         //   navigate('/user/login',{ state: isClub });
-  //         // }, 1000);
-  //         // setMsg(res.message)
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error, "kiokipk")
-  //     toast.error(error.response.data.message);
-  //   }
-
-  //   // Close the modal
-  //   setIsModalOpen(false);
-  // };
-
-
-  // const toggleSidebar = () => {
-  //   setShowSidebar(!showSidebar);
-  // };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${loginbg})` }}>
       <div className="flex flex-col items-center justify-center h-full">

@@ -9,70 +9,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// function DetailsPage() {
-//   const Navigate = useNavigate();
-//   const location = useLocation();
 
-//   const [details, setDetails] = useState([]);
-//   const [datasOf, setDatasOf] = useState('');
-
-
-//   let {datas} = location.state;
-//   console.log(datas, 'lokko');
-
-//   useEffect(()=>{
-//     setDatasOf(datas)
-//    console.log(datasOf,"datasof"); 
-//   },[])
-
-
-//   useEffect(() => {
-//     const functioncall = async () => {
-//       const { data } = await clubApi.post('/details', { id: datasOf._id }, { withCredentials: true });
-//       console.log(data.details, 'detailss');
-//       setDetails(data.details);
-//     };
-//     functioncall();
-//   }, []);
-//   console.log(details, "piip");
-
-//   const sliderSettings = {
-//     dots: true,
-//     number:true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 4, // Number of slides shown at a time
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 2000,
-
-
-//     responsive: [
-//       {
-//         breakpoint: 1024,
-//         settings: {
-//           slidesToShow: 2,
-//           autoplay:true,
-//           autoplaySpeed: 2000,
-//         },
-//       },
-//       {
-//         breakpoint: 768,
-//         settings: {
-//           slidesToShow: 1,
-//           autoplay:true,
-//           autoplaySpeed: 2000,
-//         },
-//       },
-//     ],
-//   };
-
-//   const addToTournament = async()=>{
-//     const { data } = await clubApi.post('/addtotournament', {datasOf}, { withCredentials: true });
-//     console.log(data);
-//     setDatasOf(data.announce) 
-//       console.log(datasOf,"datassfdf");
-//   }
 
 function DetailsPage() {
   const Navigate = useNavigate();

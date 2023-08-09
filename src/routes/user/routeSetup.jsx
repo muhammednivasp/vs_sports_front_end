@@ -17,7 +17,8 @@ import ClubsPage from "../../pages/clubspage";
 import Failure from "../../pages/failure";
 import SuccessPage from "../../pages/successpage";
 import MatchesView from "../../pages/matchesView";
-
+import MyTickets from "../../pages/myTickets";
+import TicketSuccessPage from "../../pages/ticketSuccessPage"
 
 
 
@@ -43,6 +44,8 @@ function UserRoute() {
       <Route path="/failure" element={<UserProtect><Failure/></UserProtect>} />
       <Route path="/successpage" element={<UserProtect><SuccessPage/></UserProtect>} />
       <Route path="/matchesview" element={<UserProtect><MatchesView/></UserProtect>} />
+      <Route path="/ticketsuccesspage" element={<UserProtect><TicketSuccessPage/></UserProtect>} />
+      <Route path="/ticketshow" element={<UserProtect><MyTickets/></UserProtect>} />
 
 
 

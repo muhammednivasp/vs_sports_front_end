@@ -11,6 +11,11 @@ import playerimg from '../assets/images/player/portrait.jpg'
 import fiveimg from '../assets/images/player/fiveimg.avif'
 import secondimg from '../assets/images/player/secondimg.webp'
 import threeimg from '../assets/images/player/threeimg.avif'
+// import blackyone from '../assets/images/player/blacky1.avif'
+// import blackytwo from '../assets/images/player/blackycenter.avif'
+// import blackythree from '../assets/images/player/blackyright.avif'
+
+
 
 import child from '../assets/images/player/child.jpg'
 

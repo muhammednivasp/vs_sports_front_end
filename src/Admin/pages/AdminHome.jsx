@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
-import Table from '../components/Table';
+import Club from '../components/Club';
+import Users from '../components/Users';
+import Tournaments from '../components/Tournaments'
+import Matches from '../components/Matches'
+import Graph from '../components/Graph';
+// import Tickets from '../components/Tickets';
 
-function AdminHome() {
-
+function AdminHome({data}) {
+  console.log(data);
+const [datas,setDatas] = useState(data)
 
   return (
-    <div className='flex  bg-gray-400 h-screen'>
-    <div className='mx-auto mt-32 bg-white md:h-[42rem] h-[32rem] overflow-y-auto'>
+    <div className='flex  bg-white h-screen'>
+      
+   
+        {datas==='club'&&<Club/>}
+        {datas==='user'&&<Users/>}
+        {datas==='tournaments'&&<Tournaments/>}
+        {datas==='matches'&&<Matches/>}
+        {datas==='graphs'&&<Graph/>}
+        {/* {datas==='tickets'&&<Tickets/>} */}
 
-        <Table/>
-        <Table/>
-        <Table/>
-        <Table/>
-        <Table/>
+
+
 
         </div>
-    </div>
   );
 }
 

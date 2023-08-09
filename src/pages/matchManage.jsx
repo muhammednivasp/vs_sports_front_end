@@ -36,10 +36,6 @@ function MatchManage() {
 
 
 
-
-
-
-
   const [matchData, setMatchData] = useState({
     matchnumber: 1,
     date: new Date(),
@@ -54,7 +50,8 @@ function MatchManage() {
       secondteamscore: 0,
       secondteamscorers: [],
     },
-    ticketstatus: false,
+    tickets:0,
+    ticketsfee:0
   });
 
   console.log(matchData, "matchdata")
@@ -73,8 +70,9 @@ function MatchManage() {
       secondteamscore: 0,
       secondteamscorers: [],
     },
-    ticketstatus: false,
-    id: ''
+    tickets:0,
+    id: '',
+    ticketsfee:0
   });
 
 
@@ -159,7 +157,7 @@ function MatchManage() {
 
   const handleEdit = async (e) => {
     try {
-      const { matchnumber, firstteamid, secondteamid, date, time } = matchEditData;
+      const { matchnumber, firstteamid, secondteamid, date, time ,tickets ,ticketsfee} = matchEditData;
 
       // Convert the time string to a valid date object
       const timeParts = time.split(':');
@@ -203,8 +201,6 @@ function MatchManage() {
 
     }
   }
-
-
 
   const [match, setMatch] = useState([])
   useEffect(() => {
@@ -253,7 +249,7 @@ function MatchManage() {
       }
       teamget()
     } catch (err) {
-
+      console.log(err);
     }
   }, [modal, editModal, matchData])
   console.log(teams, "jkjk")
@@ -417,6 +413,37 @@ function MatchManage() {
               </select>
             </div>
 
+            <div className="mb-4">
+              <label className="block text-pink-600 text-lg font-medium mb-2 text-right" htmlFor="matchnumber">
+                Available Tickets
+              </label>
+              <input
+                type="number"
+                id="tickets"
+                name="tickets"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                value={matchData.tickets}
+                min={0}
+                onChange={(e) => setMatchData({ ...matchData, tickets: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-pink-600 text-lg font-medium mb-2 text-right" htmlFor="matchnumber">
+                Ticket Fee
+              </label>
+              <input
+                type="number"
+                id="ticketsfee"
+                name="ticketsfee"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                value={matchData.ticketsfee}
+                min={0}
+                onChange={(e) => setMatchData({ ...matchData, ticketsfee: e.target.value })}
+                required
+              />
+            </div>
 
 
             <div className="flex items-center justify-between">
@@ -460,9 +487,9 @@ function MatchManage() {
                                   <h4 class="text-lg text-amber-900">Match No :-  {item.matchnumber}</h4>
                                   <div class="relative h-20 text-amber-800 text-sm">
                                     <div className='flex'>
-                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0">{item.firstteam.teamname}</span>
-                                      <span className='mx-2'>Vs</span>
-                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0">{item.secondteam.teamname}</span>
+                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.firstteam.teamname}</span>
+                                      <span className='mx-2 text-xl'>Vs</span>
+                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.secondteam.teamname}</span>
                                     </div>
                                     <button href="" class="mt-10 mx-2 flex items-center gap-3 invisible absolute left-0 top-0 translate-y-3 transition duration-300 group-hover:visible group-hover:translate-y-0" onClick={() => { matchsetup(item) }}>
                                       <span>View now </span>
@@ -512,6 +539,8 @@ function MatchManage() {
                 <div className='pt-6'>
                   <h4 class=" text-blue-400 font-medium text-xl justify-center text-center">Date :- <span className='text-black text-xl'> {data.date}</span></h4>
                   <h4 class=" text-blue-400 font-medium text-xl justify-center text-center">Time :- <span className='text-black text-xl'> {data.time}</span></h4>
+                  <h4 class=" text-blue-400 font-medium text-xl justify-center text-center">Tickets :  <span className='text-black text-xl'> {data.tickets}</span></h4>
+                  <h4 class=" text-blue-400 font-medium text-xl justify-center text-center">Tickets Fee :  <span className='text-black text-xl'> {data.ticketsfee}</span></h4>
                   <h4 class=" text-blue-400 font-medium text-xl justify-center text-center">status :- <span className='text-black text-xl'> {(data.matchstatus === true ? 'On Going' : 'Over')}</span></h4>
 
 
@@ -640,6 +669,38 @@ function MatchManage() {
 
                 </select>
               </div>
+
+              <div className="mb-4">
+              <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
+                Tickets available
+              </label>
+              <input
+                type="number"
+                id="tickets"
+                name="tickets"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                value={matchEditData.tickets}
+                min={0}
+                onChange={(e) => setMatchEditData({ ...matchEditData, tickets: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
+                Ticket Fee
+              </label>
+              <input
+                type="number"
+                id="ticketsfee"
+                name="ticketsfee"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                value={matchEditData.ticketsfee}
+                min={0}
+                onChange={(e) => setMatchEditData({ ...matchEditData, ticketsfee: e.target.value })}
+                required
+              />
+            </div>
 
 
 

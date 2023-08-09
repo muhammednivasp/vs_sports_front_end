@@ -25,7 +25,10 @@ import DetailsPage from "../../pages/detailsPage";
 import MatchManage from "../../pages/matchManage";
 import Matches from "../../pages/Matches";
 import MatchesView from "../../pages/matchesView";
-
+import Images from "../../components/images/Images";
+import TicketSuccessPage from "../../pages/ticketSuccessPage";
+import MyTickets from "../../pages/myTickets";
+import ManageTickets from "../../pages/manageTickets";
 
 function ClubRoute() {
   return (
@@ -41,7 +44,6 @@ function ClubRoute() {
       <Route path="/clubprofile" element={<ClubProtect><ClubProfile /></ClubProtect>} />
       <Route path="/editprofile" element={<ClubProtect><EditProfile /></ClubProtect>} />
       <Route path="/:id/verifyclubtoedit/:token" element={<ClubProtect><ClubEmailVerifyToEdit /></ClubProtect>} />
-
       <Route path="/changepassword" element={<ClubProtect><ChangeClubPassword /></ClubProtect>} />
       <Route path="/announce" element={<ClubProtect><AnnounceTournament /></ClubProtect>} />
       <Route path="/manage" element={<ClubProtect><ManageTournament /></ClubProtect>} />
@@ -57,6 +59,15 @@ function ClubRoute() {
       <Route path="/matchmanage" element={<ClubProtect><MatchManage/></ClubProtect>} />
       <Route path="/matches" element={<ClubProtect><Matches/></ClubProtect>} />
       <Route path="/matchesview" element={<ClubProtect><MatchesView/></ClubProtect>} />
+      <Route path="/imageupload" element={<ClubProtect><Images/></ClubProtect>} />
+      <Route path="/ticketsuccesspage" element={<ClubProtect><TicketSuccessPage/></ClubProtect>} />
+      <Route path="/ticketshow" element={<ClubProtect><MyTickets/></ClubProtect>} />
+      <Route path="/managetickets" element={<ClubProtect><ManageTickets/></ClubProtect>} />
+
+      
+
+
+
 
 
 

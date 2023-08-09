@@ -21,14 +21,30 @@ function TournamentShow() {
   const Navigate = useNavigate()
   const location = useLocation()
 
+  const [count,setCount] = useState(0)
+
   const data = location.state
   console.log(data, "iudev")
-  const id = data._id
+  let id 
+  let announce = data?.announced
+  announce ===false?
+   id = data._id
+   :
+   id = data?.announcedid
   console.log(id, "klmnbviudev")
+
+  useEffect(()=>{
+    const clubadd = async()=>{
+      const { data } = await clubApi.post('/count',{id:id,announce:announce}, { withCredentials: true });
+      console.log(data,"klklklopopop");
+      setCount(data.teams)
+    }
+    clubadd()
+  },[])
 
 
   const [details, setDetails] = useState({
-    tournamentname: data.tournamentname,
+    tournamentname: data?.tournamentname,
     location: data.location,
     status: data.status,
     tournamenttype: data.tournamenttype,
@@ -152,7 +168,7 @@ function TournamentShow() {
         style={{ backgroundImage: `url(${bgimage})`, filter: modal || addmodal ? "blur(30px)" : "none" }}
       >
         <Navbar data={clubdatas.isUser} />
-        <h1 className="text-center font-bold text-blue-600 text-4xl m-12">Details</h1>
+        <h1 className="text-center font-bold text-blue-600 text-2xl md:text-4xl m-2 md:m-8">Details</h1>
 
         <div className="flex justify-center items-center h-full">
           <div className="w-full sm:w-1/2 lg:w-2/5 px-4">
@@ -169,6 +185,8 @@ function TournamentShow() {
                 <span className="bg-green-600  h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center">{details.tournamenttype}</span>
                 <h1 className='text-lg font-semibold'>Status</h1>
                 <span className="bg-green-600  h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center">{details.status == true ? "Ongoing" : "Over"}</span>
+                <h1 className='text-lg font-semibold'>Teams Registered</h1>
+                <span className="bg-green-600  h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center">{count}</span>
                 <div className="flex lg:flex-row flex-col justify-center"> 
                 
                 

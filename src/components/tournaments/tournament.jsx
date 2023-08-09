@@ -100,13 +100,13 @@ function Tournament({ data }) {
                 <div key={item._id} style={slideStyles} className="">
                   <a onClick={() => handle(item, data)}>
                     <div
-                      className="bg-contain bg-no-repeat bg-center bg-zinc-600 bg-opacity-100 h-96  m-4 md:mx-20"
+                      className="bg-contain bg-no-repeat bg-center bg-black bg-opacity-100 h-96  m-4 md:mx-20"
                       style={{ backgroundImage: `url(${withball})` }}
                     >
                       <h1 className=" text-3xl md:text-5xl text-yellow-400 font-semibold text-center pt-48">
                         {item.tournamentname ?? ' '}
                       </h1>
-                      <h1 className="text-3xl text-black font-semibold text-center pt-2">
+                      <h1 className="text-3xl text-white font-semibold text-center pt-2">
                         {item.category ?? ' '}
                       </h1>
                     </div>

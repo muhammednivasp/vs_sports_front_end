@@ -20,7 +20,9 @@ function UserProfile() {
   const ChangePassword = () => {
     Navigate("/user/changepassword")
   }
-
+  const mytickets = ()=>{
+   Navigate(`/user/ticketshow`, {state: {isUser:'user'}})
+   }
   return (
 
     <div className="min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${background})` }}>
@@ -34,7 +36,8 @@ function UserProfile() {
           <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12 xm:w-9/12 xs:w-9/12 bg-white bg-opacity-50 rounded-lg flex flex-col justify-between items-center m-10">
             {/* Box Content */}
 
-            <button className="w-40 h-10 bg-white rounded-full text-Black font-semibold ml-auto flex items-center justify-center m-4">
+            <button className="w-40 h-10 bg-white rounded-full text-Black font-semibold ml-auto flex items-center justify-center m-4"
+            onClick={()=>{mytickets()}}>
               My Tickets
             </button>
             <div className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center">

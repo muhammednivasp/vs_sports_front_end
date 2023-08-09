@@ -91,7 +91,7 @@ function TournamentPage() {
                 </div>
               ))
             ) : (
-              <h1 className="text-red text-center font-medium text-3xl">No Tournaments found</h1>
+              <h1 className="text-red text-center font-medium text-3xl justify-center text-red-700">No Tournaments found</h1>
             )}
           </div>
         </div>

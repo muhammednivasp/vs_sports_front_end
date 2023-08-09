@@ -38,10 +38,10 @@ function Matches() {
     <div className="flex flex-col items-center justify-center h-full">
         <Navbar data='club'/>
 
-        <h1 className='text-3xl text-center my-auto mt-20 font-medium text-blue-500'>Matches</h1>
-        <div class="bg-white p-6 mt-2 shadow-md rounded-lg bg-opacity-80">
+        <h1 className='text-2xl text-center my-auto mt-20 font-medium text-blue-500'>Matches</h1>
+        <div class="bg-white p-2 mt-2 shadow-md rounded-lg bg-opacity-100">
 
-        <div className="md:w-[40rem] lg:w-[70rem] h-[44rem] relative  rounded p-12  overflow-y-auto bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${groupimg})` }}>
+        <div className="md:w-[40rem] lg:w-[70rem] h-[44rem] relative  rounded p-2  overflow-y-auto bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${groupimg})` }}>
         
             {/* <div class="bg-white ">
               <div className=' flex justify-center ' > */}
@@ -68,7 +68,7 @@ function Matches() {
                           
                           <div class="mt-2 " key={item._id}>
                             <div class="relative flex flex-col justify-end overflow-hidden rounded-b-xl mb-4 ">
-                              <div class="group relative flex cursor-pointer justify-between rounded-xl bg-red-400 before:absolute before:inset-y-0 before:right-0 before:w-1/2 before:rounded-r-xl before:bg-gradient-to-r before:from-transparent before:to-black before:opacity-0 before:transition before:duration-500 hover:before:opacity-100 bg-opacity-90">
+                              <div class="group relative flex cursor-pointer justify-between rounded-xl bg-red-800 before:absolute before:inset-y-0 before:right-0 before:w-1/2 before:rounded-r-xl before:bg-gradient-to-r before:from-transparent before:to-black before:opacity-0 before:transition before:duration-500 hover:before:opacity-100 bg-opacity-90">
                                 <div class="relative  space-y-1 p-8">
                                 <h4 class="text-lg text-green-300">{item.tournamentData.tournamentname}</h4>
                                   <h4 class="text-lg text-white">Match No :-  {item.matchnumber}</h4>
