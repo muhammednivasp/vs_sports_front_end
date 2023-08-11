@@ -21,13 +21,17 @@ function Tournaments({ data }) {
   const Navigate = useNavigate()
 
   const Tournamentsview = (data) => {
-    console.log("koi an ethusi")
+    // console.log("koi an ethusi")
     Navigate((data === 'user' ? '/user/tournamentpage' : '/club/tournamentpage'), { state: data })
   }
 
   const ClubsView = (data) => {
-    console.log("koi an ethusi")
+    // console.log("koi an ethusi")
     Navigate((data === 'user' ? '/user/clubspage' : '/club/clubspage'), { state: data })
+  }
+  const UpcomingMatchesview = (data)=>{
+    // console.log("koi an ethusi")
+    Navigate((data === 'user' ? '/user/upcomingpage' : '/club/upcomingpage'), { state: data })
   }
 
   return (
@@ -57,7 +61,7 @@ function Tournaments({ data }) {
           </button>
         </li>
         <li className="snap-center">
-        <button onClick={() => Tournamentsview(data)}>
+        <button onClick={() => UpcomingMatchesview(data)}>
         <div className="relative flex-shrink-0 h-80 max-w-[95vw] overflow-hidden rounded-3xl mb-20 bg-cover bg-center" style={{ backgroundImage: `url(${blackytwo})` }}>
             {/* <img src={fiveimg} alt="" className="absolute inset-0 w-full h-full object-cover object-bottom" /> */}
             <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-black/75"></div>

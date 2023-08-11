@@ -6,10 +6,12 @@ import AdminLogin from '../../Admin/pages/loginPage'
 import AdminHome from '../../Admin/pages/AdminHome'
 import AdminLayout from '../../Admin/pages/AdminLayout'
 // import Club from '../../Admin/components/Club'
+import NotFoundPage from "../../pages/notFoundPage";
 
 function AdminRoute() {
   return (
     <Routes>
+          <Route path="*" element={<NotFoundPage data={'admin'}/>}/>
           <Route path="/" element={<AdminPublic><AdminLogin /></AdminPublic>} />
           <Route  path="/home" element={<AdminLayout/>}>
           <Route index element={<AdminProtect><AdminHome data={'graphs'}/></AdminProtect>} />

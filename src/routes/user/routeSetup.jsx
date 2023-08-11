@@ -19,19 +19,18 @@ import SuccessPage from "../../pages/successpage";
 import MatchesView from "../../pages/matchesView";
 import MyTickets from "../../pages/myTickets";
 import TicketSuccessPage from "../../pages/ticketSuccessPage"
-
-
+import UpcomingMatches from "../../pages/upcomingMatches";
+import NotFoundPage from "../../pages/notFoundPage";
 
 function UserRoute() {
   return (
     <Routes>
+      <Route path="*" element={<NotFoundPage data={'user'}/>}/>
       <Route path="/login" element={<UserPublic><Login /></UserPublic>} />
       <Route path="/:id/forgotverify/:token" element={<UserPublic><EmailForgotVerify /></UserPublic>} />
-
       <Route path="/signup" element={<UserPublic><Signup /></UserPublic>} />
       <Route path="/:id/verify/:token" element={<UserPublic><EmailVerify /></UserPublic>} />
-
-
+      
       <Route path="/home" element={<UserProtect><Home /></UserProtect>} />
       <Route path="/profile" element={<UserProtect><UserProfile /></UserProtect>} />
       <Route path="/editprofile" element={<UserProtect><EditUserProfile /></UserProtect>} />
@@ -46,7 +45,9 @@ function UserRoute() {
       <Route path="/matchesview" element={<UserProtect><MatchesView/></UserProtect>} />
       <Route path="/ticketsuccesspage" element={<UserProtect><TicketSuccessPage/></UserProtect>} />
       <Route path="/ticketshow" element={<UserProtect><MyTickets/></UserProtect>} />
+      <Route path="/upcomingpage" element={<UserProtect><UpcomingMatches/></UserProtect>} />
 
+      
 
 
       

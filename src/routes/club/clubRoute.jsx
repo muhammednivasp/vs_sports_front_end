@@ -29,10 +29,12 @@ import Images from "../../components/images/Images";
 import TicketSuccessPage from "../../pages/ticketSuccessPage";
 import MyTickets from "../../pages/myTickets";
 import ManageTickets from "../../pages/manageTickets";
-
+import UpcomingMatches from "../../pages/upcomingMatches";
+import NotFoundPage from "../../pages/notFoundPage";
 function ClubRoute() {
   return (
     <Routes>
+      <Route path="*" element={<NotFoundPage data={'club'}/>}/>
       <Route path="/login" element={<ClubPublic><Login /></ClubPublic>} />
       <Route path="/:id/forgotverify/:token" element={<ClubPublic><ClubEmailForgotVerify /></ClubPublic>} />
 
@@ -63,6 +65,8 @@ function ClubRoute() {
       <Route path="/ticketsuccesspage" element={<ClubProtect><TicketSuccessPage/></ClubProtect>} />
       <Route path="/ticketshow" element={<ClubProtect><MyTickets/></ClubProtect>} />
       <Route path="/managetickets" element={<ClubProtect><ManageTickets/></ClubProtect>} />
+      <Route path="/upcomingpage" element={<ClubProtect><UpcomingMatches/></ClubProtect>} />
+
 
       
 
