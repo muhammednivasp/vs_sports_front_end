@@ -11,20 +11,16 @@ function App() {
   return (
 
     <BrowserRouter>
-
       <Toaster
         position="top-center"
         reverseOrder={false}
       />
-
       <Routes>
 
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/user/*" element={<UserRoute />} />
         <Route exact path="/club/*" element={<ClubRoute />} />
         <Route exact path="/admin/*" element={<AdminRoute />} />
-
-
 
       </Routes>
     </BrowserRouter>

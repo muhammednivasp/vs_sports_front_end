@@ -1,6 +1,6 @@
 
-import React, { useState,useEffect} from 'react';
-import { useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Admin/components/Navbar';
 import Sidebar from '../components/Sidebar';
 import bgimage from '../../assets/images/bg/backgroundvssports.jpg';
@@ -15,34 +15,13 @@ import { useDispatch } from 'react-redux';
 import { setAdminDetails } from '../../redux/adminDataSlice'
 
 
-
 const LoginPage = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-    // console.log("ethi")
-  // const userdatas = useSelector((state) => {
-  //   state.user
-  // })
-  //  console.log(userdatas)
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const location = useLocation()
-  // const isClub = location.state
-
-  // console.log(isClub)
-
-
-
-  // useEffect(() => {
-  //   // const isClub = location.state 
-  //   console.log(isClub)
-  //   if (!isClub) {
-  //     navigate('/')
-  //   }
-
-  // }, [isClub])
 
   const [value, setValue] = useState({
     email: "",
@@ -55,48 +34,35 @@ const LoginPage = () => {
       [name]: value,
     }));
   };
-  console.log(value)
-
 
   const checkUser = async (e) => {
-    // console.log(value)
     const { email, password } = value
     if (email.trim() === '' || password.trim() === '') {
       return toast.error("All fields are required")
     }
     try {
-      console.log(value)
-
-      // const {data} = clubApi.post('/login',value, { withcredentials: true })
-      // console.log("fffffff")
 
       const { data } = await adminApi.post('/login', value, { withCredentials: true })
-      console.log(data, "dsdsdsd")
       if (data) {
         if (data.errors) {
           toast.error(data.message)
         } else {
-          // console.log("dkdkkdkkdkkdkyyyy")
           localStorage.setItem(
-          'adminToken',
+            'adminToken',
             data.token
           );
-          // const tok=localStorage.getItem('token')
-          // console.log(tok)
           dispatch(setAdminDetails({
             id: data.adminExist._id,
             email: data.adminExist.email,
           }))
-
           toast.success(data.message)
           setTimeout(() => {
-            navigate( '/admin/home');
+            navigate('/admin/home');
           }, 1000);
 
         }
       }
     } catch (error) {
-      console.log(error)
       error.response?.status == 400 ? toast.error(error.response?.data?.message) : toast.error(error.message)
     }
   }
@@ -117,7 +83,6 @@ const LoginPage = () => {
             id="email"
             placeholder="Enter your email"
             name="email"
-            // value={value.email}
             onChange={handleChange}
           />
 
@@ -128,7 +93,6 @@ const LoginPage = () => {
             id="password"
             placeholder="Enter your password"
             name="password"
-            // value={value.password}
             onChange={handleChange}
           />
         </div>
@@ -142,12 +106,9 @@ const LoginPage = () => {
           SUBMIT
         </button>
 
-        
-
-
       </div>
     </div>
-    
+
   );
 };
 

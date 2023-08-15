@@ -3,12 +3,8 @@ import background from '../assets/images/bg/backgroundvssports.jpg'
 import Navbar from '../components/navbar/navbar'
 import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
-// import playerimg from '../assets/images/player/pngwing.com.png'
 import toast from 'react-hot-toast'
-// import bgimage from "../assets/images/bg/backgroundvssports.jpg";
 import { clubApi } from '../utils/api';
-// import yellowimg from '../assets/images/player/yellowplayer.png'
-
 
 function ClubProfile() {
 
@@ -18,52 +14,35 @@ function ClubProfile() {
   const [view, setView] = useState(false);
   const [item, setItem] = useState('');
 
-
   const [memoryModal, setMemoryModal] = useState(false)
 
   const location = useLocation();
   const isUser = location.state;
 
-
-
-
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
 
   const id = clubdatas.id
-  console.log(id, "jiuy");
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-
       const images = clubsImg
       const formData = new FormData();
       const formDataArray = images.map((imageFile, index) => {
         formData.append("images", imageFile);
-        // console.log(index,"kk");
-        // console.log(imageFile,"klk");
 
       });
       formData.append("id", id);
-      // console.log(formData.get('image'));
       const { data } = await clubApi.post('/uploadimage', formData)
-      console.log(data, "hy")
       toast.success(data.message)
       setModal(false)
     } catch (error) {
-      console.log(error);
       toast.error(data.message)
-
     }
   }
 
-  console.log(clubsImg, "hhhh");
-
   const Navigate = useNavigate()
-
   const EditClubProfile = () => {
     Navigate("/club/editprofile")
   }
@@ -87,7 +66,6 @@ function ClubProfile() {
   useEffect(() => {
     const loadImage = async () => {
       const { data } = await clubApi.post('/imagesget', { id: id })
-      console.log(data, "fgfgerere");
       setimages(data.images)
     }
     loadImage()

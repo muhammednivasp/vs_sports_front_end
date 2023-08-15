@@ -10,22 +10,16 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import DatePicker from 'react-datepicker';
 
-
 function AnnouncedShow() {
 
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
-
   let mailId = clubdatas.email
 
   const Navigate = useNavigate()
   const location = useLocation()
 
   const data = location.state
-  console.log(data, "iudev")
   const id = data._id
-  console.log(id, "klmnbviudev")
-
 
   const [details, setDetails] = useState({
     tournamentname: data.tournamentname,
@@ -47,10 +41,7 @@ function AnnouncedShow() {
   };
 
   const savechanges = async () => {
-    // e.preventDefault();
     const { tournamentname, location, fee, teamsrequired, lastdate, category } = details;
-    console.log(details)
-    console.log(fee)
 
     if (fee < 0) {
       return toast.error('fee minimum zero');
@@ -65,12 +56,10 @@ function AnnouncedShow() {
     try {
       const { data } = await clubApi.patch('/announcetournament', { ...details, EmailId: mailId, id: id }, { withCredentials: true });
       toast.success(data.message);
-      console.log(data, "hiiiiiiii")
       setTimeout(() => {
         Navigate('/club/manage');
       }, 1000);
     } catch (error) {
-      console.log(error, "hiiiiiiii")
       toast.error(error.message);
     }
   }
@@ -85,13 +74,12 @@ function AnnouncedShow() {
     setSelectedDate(date);
   };
 
-
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const DetailsShow = ()=>{
-    Navigate('/club/details',{state:{datas:data}})
+  const DetailsShow = () => {
+    Navigate('/club/details', { state: { datas: data } })
   }
 
   return (
@@ -127,7 +115,6 @@ function AnnouncedShow() {
                   <button className="bg-white text-gray-800 px-4 py-2 m-2 rounded-lg w-32 font-semibold text-lg hover:text-red-400 hover:tracking-wider" onClick={() => setModal(true)}>Edit </button>
                   <button className="bg-white text-gray-800 px-4 py-2 m-2 rounded-lg w-32 font-semibold text-lg hover:text-red-400 hover:tracking-wider" onClick={() => DetailsShow()}>Details</button>
 
-                  {/* <button className="bg-white text-gray-800 px-4 py-2 m-2 rounded-lg">Button 2</button> */}
                 </div>
               </div>
             </div>
@@ -179,7 +166,6 @@ function AnnouncedShow() {
                   <option className='text-black font-medium' value="League">League</option>
                   <option className='text-black font-medium' value="Nockout">Nockout</option>
                   <option className='text-black font-medium' value="Combo">Combo</option>
-                  {/* Add more options for different categories */}
                 </select>
                 <h1 className="text-lg font-semibold">Last Date</h1>
                 <div >

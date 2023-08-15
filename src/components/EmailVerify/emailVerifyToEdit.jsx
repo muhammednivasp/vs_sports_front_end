@@ -9,18 +9,11 @@ import { userApi } from '../../utils/api';
 import { setUserDetails } from '../../redux/userDataSlice'
 import { setTempDetails } from '../../redux/updateDataSlice';
 
-
-
-
 export default function EmailVerifyToEdit() {
 
   let updatedatas = useSelector((state) => state.temp);
-  console.log(updatedatas.data.name, "ioioi")
 
   const dispatch = useDispatch()
-
-  console.log("upmail kittiyo")
-  console.log(updatedatas)
 
   const [validUrl, setValidUrl] = useState(false);
   const params = useParams();
@@ -28,18 +21,12 @@ export default function EmailVerifyToEdit() {
   const Navigate = useNavigate()
 
   const token = params.token
-  console.log(token)
   const userid = params.id
-  console.log(userid)
-
 
   useEffect(() => {
     const verifyEmailUrl = async () => {
       try {
-
         const { data } = await userApi.patch('/edituserprofile', { ...updatedatas, token: token, userid: userid }, { withCredentials: true });
-
-        console.log(data, "loytrr");
         setValidUrl(true);
         toast.success(data.message);
         dispatch(setUserDetails({
@@ -54,10 +41,7 @@ export default function EmailVerifyToEdit() {
           data: ''
         }))
       } catch (error) {
-        console.log(error);
-        // setValidUrl(false);
         toast.error(error.message);
-
       }
     };
     verifyEmailUrl();

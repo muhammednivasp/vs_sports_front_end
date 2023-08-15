@@ -10,39 +10,15 @@ function MyTickets() {
     const location = useLocation()
     const state = location.state
     const isUser = state.isUser
-    console.log(isUser, "kikii");
-
     const datas = useSelector((state) => isUser === 'user' ? state.user : state.club);
-    console.log('sdwqd', datas, "ioioi")
-
     const [ticket, setTickets] = useState([])
     useEffect(() => {
         const gettickets = async () => {
             const { data } = await (isUser === 'club' ? clubApi : userApi).post('/ticketget', { ...datas }, { withCredentials: true });
-            console.log(data, "kkkk");
             setTickets(data.tickets)
         }
         gettickets()
     }, [])
-    console.log(ticket, "ggh");
-
-    // const handleDownloadTicket = async (ticketId) => {
-    //     try {
-    //       const { data } = await (isUser === 'club' ? clubApi : userApi).get(`/download-ticket/${ticketId}`, { responseType: 'blob' });
-
-    //       const blob = new Blob([data], { type: 'application/pdf' });
-    //       const url = window.URL.createObjectURL(blob);
-    //       const link = document.createElement('a');
-    //       link.href = url;
-    //       link.download = 'ticket.pdf';
-    //       link.click();
-    //       toast.success('Downloaded successfully')
-    //       window.print()
-    //     } catch (error) {
-    //       console.log('Error downloading ticket:', error);
-    //       toast.error('Error downloading')
-    //     }
-    //   };
 
     const handlePrintTicket = (item, ticketData) => {
         const printableContent = `
@@ -58,23 +34,18 @@ function MyTickets() {
             <p class='text-xl'>Location: <span class="text-sm">${item.match.tournament.location}</span></p>
             <p class='text-xl'>Rs: <span class="text-sm">${item.match.ticketsfee}</span></p>
             
-            <!-- Add other ticket details here -->
           </div>
         `;
 
         const printWindow = window.open('', '_blank');
         printWindow.document.write('<html><head><title>Ticket</title>');
-        // Include the necessary Tailwind CSS stylesheet in the print window
         printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">');
         printWindow.document.write('</head><body>');
         printWindow.document.write(printableContent);
         printWindow.document.write('</body></html>');
         printWindow.document.close();
-
         printWindow.print();
     };
-
-
 
     return (
         <div className="min-h-screen bg-gray-100 py-9 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})` }}>
@@ -114,13 +85,10 @@ function MyTickets() {
                                     <div className="flex justify-between">
                                         <button
                                             className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
-                                            // onClick={() => handleDownloadTicket(ticket)}
-                                            //   onClick={() => handleDownloadTicket(tick._id)} 
                                             onClick={() => handlePrintTicket(item, tick)}
                                         >
                                             Download Ticket
                                         </button>
-                                        {/* <span className="text-gray-500">{ticket.price} USD</span> */}
                                         <span className="text-gray-500 p-2">Rs : {item.match.ticketsfee}</span>
                                     </div>
                                 </div>
@@ -130,11 +98,8 @@ function MyTickets() {
 
 
                 </div>
-                {/* </div> */}
             </div>
         </div>
-        // </div>
-        // </div>
 
     );
 }

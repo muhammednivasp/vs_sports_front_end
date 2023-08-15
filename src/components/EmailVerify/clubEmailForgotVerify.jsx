@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import success from "../../assets/images/verify/success.png";
 import style from "../../components/EmailVerify/styles.module.css";
 import { useNavigate, useParams } from 'react-router-dom';
-// import axios from 'axios';
-// import { userBaseUrl } from '../../constants/constants';
 import toast from 'react-hot-toast'
 
 import { clubApi } from '../../utils/api';
 
-
 export default function EmailForgotVerify() {
-  console.log("hoihoi")
   const [validUrl, setValidUrl] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -36,8 +32,6 @@ export default function EmailForgotVerify() {
     } else {
       try {
         const { data } = await clubApi.patch('/forgotpassword', { ...value, clubId: clubId, token: token }, { withCredentials: true })
-
-        console.log(data, "loytrr");
         toast.success(data.message);
         setTimeout(() => {
           Navigate('/club/login', { state: 'club' });

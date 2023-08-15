@@ -4,23 +4,23 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 
 function AdminLayout() {
-    const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
 
-    const toggleSidebar = () => {
-      setShowSidebar(!showSidebar);
-    };
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
   return (
     <div>
- <div className="bg-cover bg-center bg-no-repeat  bg-fixed" style={{ backgroundSize: '100% 100%' }}>
-      <div className='flex'>
-      <Navbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      <div className="bg-cover bg-center bg-no-repeat  bg-fixed" style={{ backgroundSize: '100% 100%' }}>
+        <div className='flex'>
+          <Navbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+        </div>
       </div>
-    </div>
-    <div className="">
+      <div className="">
         {showSidebar && <Sidebar className="" />}
-       
+
       </div>
-      <div>{<Outlet/>}</div>
+      <div>{<Outlet />}</div>
     </div>
   )
 }

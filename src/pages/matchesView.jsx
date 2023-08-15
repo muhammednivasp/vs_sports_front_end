@@ -11,20 +11,14 @@ import { useSelector, useDispatch } from 'react-redux'
 function MatchesView() {
   const location = useLocation()
   const { data, isUser } = location.state
-  console.log(data, "fff")
-  console.log(isUser, "fff")
 
   const clubdatas = useSelector((state) => state[isUser === 'user' ? 'user' : 'club']);
-  console.log(clubdatas, "ioioissssssssssssssss")
-
   const [tournament, setTournament] = useState(data)
   const [details, setDetails] = useState([])
-  console.log(tournament._id);
   const id = tournament._id
+
   useEffect(() => {
     const find = async () => {
-      console.log(tournament._id);
-
       try {
         const requestData = { id: tournament._id };
         const { data } = await (isUser === 'club' ? clubApi : userApi).post(
@@ -32,7 +26,6 @@ function MatchesView() {
           requestData,
           { withCredentials: true }
         );
-        console.log(data, "sssss");
         setDetails(data.details)
       } catch (error) {
         console.error("Error occurred while fetching tournament matches:", error);
@@ -61,10 +54,6 @@ function MatchesView() {
     setModal(true)
   }
 
-  console.log(data.results?.firstteamscorers, "jijij");
-  console.log(data.results?.firstteamscore, "jijij");
-  // console.log(score,"jijij");
-
   const [ticketModal, setTicketModal] = useState(false)
   const [match, setMatch] = useState('')
 
@@ -79,29 +68,16 @@ function MatchesView() {
     const { name, value } = e.target;
     setValues(value)
   };
-  console.log(values, "jyjyj");
-
   const handlePayment = async () => {
-    // const { clubname, location, phonenumber, registration } = values
-
-    console.log(values, "ytythtt");
     try {
-      console.log("log");
       const response = await (isUser === 'user' ? userApi : clubApi).post('/ticketpayment', { count: values, isUser: isUser, clubdatas: clubdatas, match: match })
-      console.log(response, "llllll");
       if (response.status === 202) {
-        console.log(response);
         const datas = response?.data?.order;
-        console.log(datas, "klkdss");
-
       }
-
       if (response.data.url) {
-        console.log(response.data.url);
         window.location.href = response.data.url;
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   }
@@ -163,8 +139,6 @@ function MatchesView() {
                             </div>
                           </div>
                         </div>
-                        {/* ... */}
-
                       </div>
                     </div>
                   </div>

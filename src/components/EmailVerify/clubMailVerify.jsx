@@ -4,9 +4,9 @@ import style from "../../components/EmailVerify/styles.module.css";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { clubBaseUrl } from '../../constants/constants';
+import toast from 'react-hot-toast'
 
 export default function ClubEmailVerify() {
-  console.log("mail kittiyo")
   const [validUrl, setValidUrl] = useState(false);
   const params = useParams();
 
@@ -17,11 +17,10 @@ export default function ClubEmailVerify() {
       try {
         const url = `${clubBaseUrl}/club/${params.id}/verify/${params.token}`;
         const { data } = await axios.get(url);
-        console.log(data);
         setValidUrl(true);
       } catch (error) {
-        console.log(error);
-        // setValidUrl(false);
+        toast.error(error);
+
       }
     };
     verifyEmailUrl();

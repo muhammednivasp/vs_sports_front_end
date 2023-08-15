@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from 'react';
 // import groupplayer from '../../assets/images/player/groupplayer.png';
 // import bgimage from '../../assets/images/bg/backgroundvssports.jpg';
 import withball from '../../assets/images/player/withball.png';
+import Loader from '../loader/loader';
 
 import toast from 'react-hot-toast';
 import Slider from 'react-slick';
@@ -15,29 +16,28 @@ import { userApi } from '../../utils/api';
 import { clubApi } from '../../utils/api';
 import { useLocation, useNavigate } from 'react-router-dom'
 
-
 function Tournament({ data }) {
-  console.log(data, "datasss")
   const baseurl = data === 'user' ? userApi : clubApi;
   const [details, setDetails] = useState([]);
   const [sliderLoaded, setSliderLoaded] = useState(false);
+
 
   const Navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const announcedtournament = await baseurl.get('/announced', { withCredentials: true });
-        console.log(announcedtournament.data.details, 'kytrrtr');
+
         setDetails(announcedtournament.data.details);
       } catch (error) {
-        // toast.error(error.response.data.message);
+        console.log(error);
       }
     };
 
     fetchData();
   }, []);
-
 
   const sliderRef = useRef(null);
 
@@ -75,24 +75,23 @@ function Tournament({ data }) {
       },
     ],
   };
-
   const slideStyles = {
     margin: '0 10px',
   };
 
   const handle = (item, data) => {
-    console.log(item, "iddiidid")
     Navigate(data === 'user' ? '/user/show' : '/club/show', { state: { ...item, isUser: data } })
 
   }
+ 
 
 
   return (
     <>
+
       {details.length > 0 ? (
         <>
           <h1 className="text-center mt-28 text-3xl font-semibold text-white">Announced Tournaments</h1>
-          {/* <tr className='h-2 w-full mt-6 bg-gray-400 opacity-60'></tr> */}
 
           {sliderLoaded && (
             <Slider {...settings} className="m-7 md:m-8" ref={sliderRef}>
@@ -118,21 +117,23 @@ function Tournament({ data }) {
         </>
       ) : (
         <>
-        <h1 className="text-center mt-8 text-3xl font-semibold text-gray-600 text-opacity-100 pt-16">Announced Tournaments</h1>
-      
-        <div
-          className="bg-contain bg-no-repeat bg-center bg-zinc-600 bg-opacity-100 h-80 m-2 mt-4 mx-4 md:mx-20 mb-16"
-          style={{ backgroundImage: `url(${withball})` }}
-        >
-          <h1 className="text-2xl text-white font-semibold text-center pt-48 md:pt-48 md:text-4xl">
-            Currently There is no Announced Tournaments !
-          </h1>
-          <h1 className="text-xl text-red-600 font-normal text-center pt-2 md:text-3xl">
-            Wait for next update..
-          </h1>
-        </div>
-      </>
+          <h1 className="text-center mt-8 text-3xl font-semibold text-gray-600 text-opacity-100 pt-16">Announced Tournaments</h1>
+
+          <div
+            className="bg-contain bg-no-repeat bg-center bg-zinc-600 bg-opacity-100 h-80 m-2 mt-4 mx-4 md:mx-20 mb-16"
+            style={{ backgroundImage: `url(${withball})` }}
+          >
+            <h1 className="text-2xl text-white font-semibold text-center pt-48 md:pt-48 md:text-4xl">
+              Currently There is no Announced Tournaments !
+            </h1>
+            <h1 className="text-xl text-red-600 font-normal text-center pt-2 md:text-3xl">
+              Wait for next update..
+            </h1>
+          </div>
+        </>
       )}
+
+
     </>
   );
 }

@@ -10,18 +10,10 @@ import { setTempDetails } from '../../redux/updateDataSlice';
 import { setClubDetails } from '../../redux/clubDataSlice';
 
 
-
-
-
 export default function ClubEmailVerifyToEdit() {
 
   let updatedatas = useSelector((state) => state.temp);
-  console.log(updatedatas.data.name, "ioioi")
-
   const dispatch = useDispatch()
-
-  console.log("upmail kittiyo")
-  console.log(updatedatas)
 
   const [validUrl, setValidUrl] = useState(false);
   const params = useParams();
@@ -29,10 +21,7 @@ export default function ClubEmailVerifyToEdit() {
   const Navigate = useNavigate()
 
   const token = params.token
-  console.log(token)
   const clubid = params.id
-  console.log(clubid)
-
 
   useEffect(() => {
     const verifyEmailUrl = async () => {
@@ -40,7 +29,6 @@ export default function ClubEmailVerifyToEdit() {
 
         const { data } = await clubApi.patch('/verifyeditclubprofile', { ...updatedatas, token: token, clubid: clubid }, { withCredentials: true });
 
-        console.log(data, "loytrr");
         setValidUrl(true);
         toast.success(data.message);
         dispatch(setClubDetails({
@@ -56,8 +44,6 @@ export default function ClubEmailVerifyToEdit() {
           data: ''
         }))
       } catch (error) {
-        console.log(error);
-        // setValidUrl(false);
         toast.error(error.message);
 
       }

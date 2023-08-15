@@ -4,9 +4,7 @@ import toast from 'react-hot-toast'
 import { useGoogleLogin } from '@react-oauth/google';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 import axios from 'axios'
-
 
 import loginbg from '../../assets/images/loginbg/login.jpg'
 import image from '../../assets/images/logo/logo.png'
@@ -17,14 +15,8 @@ import { setUserDetails } from '../../redux/userDataSlice'
 import { setClubDetails } from '../../redux/clubDataSlice'
 
 
-
-
 function Login() {
-  // console.log("ethi")
-  // const userdatas = useSelector((state) => {
-  //   state.user
-  // })
-  //  console.log(userdatas)
+
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
 
@@ -32,8 +24,6 @@ function Login() {
   const dispatch = useDispatch()
   const location = useLocation()
   const isClub = location.state
-
-  console.log(isClub)
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
@@ -52,9 +42,7 @@ function Login() {
           })
           .then((res) => {
             setProfile({ ...res.data, isUser: 'user' })
-            // console.log(res.data)
             userApi.post('/googlelogin', { ...res.data, isUser: 'user' }, { withCredentials: true }).then((res) => {
-              // console.log(res,"koikoikoi")
 
               localStorage.setItem("userToken", res.data.token)
 
@@ -66,20 +54,16 @@ function Login() {
 
               }))
 
-              // console.log(userdatas,"kokokdedede")
-
               toast.success(res.data.message)
               setTimeout(() => {
                 navigate('/user/home', { state: isClub })
               }, 1000)
             }).catch((res) => {
-              // console.log(res,"lolololol")
               toast.error(res.response.data.message);
 
             })
           })
           .catch((err) => {
-            // console.log("frfrffr");
             console.log(err)
           });
 
@@ -91,8 +75,6 @@ function Login() {
 
 
   useEffect(() => {
-    // const isClub = location.state 
-    console.log(isClub)
     if (!isClub) {
       navigate('/')
     }
@@ -111,36 +93,25 @@ function Login() {
       [name]: value,
     }));
   };
-  console.log(value)
-
 
   const checkUser = async (e) => {
-    // console.log(value)
     const { email, password, isUser } = value
     if (email.trim() === '' || password.trim() === '') {
       return toast.error("All fields are required")
     }
     try {
-      console.log(value)
-
-      // const {data} = clubApi.post('/login',value, { withcredentials: true })
-      // console.log("fffffff")
 
       const { data } = await (isClub === 'user'
         ? userApi.post('/login', value, { withCredentials: true })
         : clubApi.post('/login', value, { withCredentials: true }));
-      console.log(data, "dsdsdsd")
       if (data) {
         if (data.errors) {
           toast.error(data.message)
         } else {
-          // console.log("dkdkkdkkdkkdkyyyy")
           localStorage.setItem(
             isClub === 'user' ? 'userToken' : 'clubToken',
             data.token
           );
-          // const tok=localStorage.getItem('token')
-          // console.log(tok)
           isClub === 'user' ? dispatch(setUserDetails({
             id: data.userExist._id,
             email: data.userExist.email,
@@ -158,7 +129,6 @@ function Login() {
               location: data.userExist.location,
             }))
 
-
           toast.success(data.message)
           setTimeout(() => {
             navigate(isClub === 'user' ? '/user/home' : '/club/home', {
@@ -169,49 +139,33 @@ function Login() {
         }
       }
     } catch (error) {
-      console.log(error)
       error.response?.status == 400 ? toast.error(error.response?.data?.message) : toast.error(error.message)
     }
   }
-
-
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
   const handleForgotPasswordSubmit = async () => {
 
-    console.log('Forgot Password form submitted');
-    console.log('Email:', forgotPasswordEmail);
-
     let valueof = { email: forgotPasswordEmail, isUser: isClub }
-    console.log(valueof, "kopkpkpk")
     try {
 
       const { data } = await (isClub === 'user'
         ? userApi.post('/forgot', valueof, { withCredentials: true })
         : clubApi.post('/clubforgot', valueof, { withCredentials: true }))
-      console.log(data, "dsdsdsd")
 
-      console.log(data, "datassss")
       if (data) {
         if (data.errors) {
           toast.error(data.message);
         } else {
           toast.success(data.message);
-          // setTimeout(() => {
-          //   navigate('/user/login',{ state: isClub });
-          // }, 1000);
-          // setMsg(res.message)
         }
       }
     } catch (error) {
-      console.log(error, "kiokipk")
       toast.error(error.response.data.message);
     }
 
-    // Close the modal
     setIsModalOpen(false);
   };
 
@@ -275,7 +229,6 @@ function Login() {
           </div>
         )}
 
-        {/* modal */}
         {isModalOpen && (
           <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg">

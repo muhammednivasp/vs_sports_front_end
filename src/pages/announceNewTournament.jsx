@@ -9,17 +9,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 
-
-
-// import { setUserDetails } from '../redux/userDataSlice'
-
-// import Footer from '../components/footer/footer'
-
 function AnnounceTournament() {
-console.log('fff');
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
-
   let mailId = clubdatas.email
 
   const dispatch = useDispatch()
@@ -44,16 +35,6 @@ console.log('fff');
       [name]: value,
     }));
   };
-  // useEffect(() => {
-    // console.log(value, "nanae")
-  // })
-
-  // const handleDateChange = (date) => {
-  //   setValue((prevValue) => ({
-  //     ...prevValue,
-  //     lastdate: date.toISOString().split('T')[0],
-  //   }));
-  // };
 
   const handleDateChange = (date) => {
     setValue((prevValue) => ({
@@ -64,16 +45,12 @@ console.log('fff');
     console.log(date)
   };
 
-
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   const savechanges = async () => {
-    // e.preventDefault();
     const { tournamentname, location, fee, teamsrequired, lastdate, category } = value;
-    console.log(value)
-    console.log(fee)
 
     if (fee < 0) {
       return toast.error('fee minimum zero');
@@ -89,25 +66,18 @@ console.log('fff');
       const { data } = await clubApi.post('/announcetournament', { ...value, EmailId: mailId }, { withCredentials: true });
 
       if (data) {
-        console.log(data, "hiiihiihiihiihiihaaaa")
         if (data.errors) {
-          console.log(data.errors)
           toast.error(data.message);
         } else {
           toast.success(data.message);
-
-          console.log(data, "hiiiiiiii")
           setTimeout(() => {
             Navigate("/club/manage");
           }, 1000);
         }
       }
     } catch (error) {
-      console.log(error, "hiiiiiiii")
       toast.error(error.response.data.message);
     }
-
-    // const currentDate = new Date().toISOString().split('T')[0];
 
   };
 
@@ -116,13 +86,10 @@ console.log('fff');
     <div className="min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${background})` }}>
       <Navbar data={'club'} />
       <div className="container mx-auto ">
-        {/* Content of the User Profile page */}
         <div className=" flex flex-col items-center justify-center pt-32">
-          {/* Heading */}
           <h2 className="text-2xl text-blue-700 font-bold ">Announce a Tournament</h2>
 
           <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12 xm:w-9/12 xs:w-9/12 bg-white bg-opacity-50 rounded-lg flex flex-col justify-between items-center m-10">
-            {/* Box Content */}
 
 
             <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="text" id="tournamentname" name="tournamentname" placeholder="Enter Tournament Name" onChange={handleChange}></input>
@@ -139,11 +106,7 @@ console.log('fff');
               <option className='text-black font-medium' value="League">League</option>
               <option className='text-black font-medium' value="Nockout">Nockout</option>
               <option className='text-black font-medium' value="Combo">Combo</option>
-              {/* Add more options for different categories */}
             </select>
-
-
-            {/* <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-50" type="date" id="date" name="date" placeholder="Last date" onChange={handleChange}></input> */}
 
             <div >
               <DatePicker
@@ -163,11 +126,9 @@ console.log('fff');
 
             </div>
 
-
           </div>
         </div>
       </div>
-      {/* <Footer/>  */}
     </div>
 
   )

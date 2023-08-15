@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../../components/user/login";
-import Clubsignup from "../../components/club/Clubsignup";
+import Clubsignup from "../../components/club/clubsignup";
 import Home from '../../pages/home'
 import ClubProtect from "./clubProtected";
 import ClubPublic from "./clubPublic";
@@ -18,29 +18,28 @@ import AddTournament from "../../pages/addTournament";
 import ShowAnnounced from "../../components/showannounced/showAnnounced"
 import TournamentShow from "../../pages/tournamentShow"
 import TournamentPage from "../../pages/tournamentpage";
-import ClubsPage from "../../pages/clubspage";
+import ClubsPage from "../../pages/clubsPage";
 import SuccessPage from "../../pages/successpage";
 import Failure from "../../pages/failure";
 import DetailsPage from "../../pages/detailsPage";
 import MatchManage from "../../pages/matchManage";
-import Matches from "../../pages/Matches";
+import Matches from "../../pages/matches";
 import MatchesView from "../../pages/matchesView";
-import Images from "../../components/images/Images";
+import Images from "../../components/imageadd/Images";
 import TicketSuccessPage from "../../pages/ticketSuccessPage";
 import MyTickets from "../../pages/myTickets";
 import ManageTickets from "../../pages/manageTickets";
 import UpcomingMatches from "../../pages/upcomingMatches";
 import NotFoundPage from "../../pages/notFoundPage";
 function ClubRoute() {
+
   return (
     <Routes>
       <Route path="*" element={<NotFoundPage data={'club'}/>}/>
       <Route path="/login" element={<ClubPublic><Login /></ClubPublic>} />
       <Route path="/:id/forgotverify/:token" element={<ClubPublic><ClubEmailForgotVerify /></ClubPublic>} />
-
       <Route path="/clubsignup" element={<ClubPublic><Clubsignup /></ClubPublic>} />
       <Route path="/:id/verify/:token" element={<ClubPublic><ClubEmailVerify /></ClubPublic>} />
-
 
       <Route path="/home" element={<ClubProtect><Home /></ClubProtect>} />
       <Route path="/clubprofile" element={<ClubProtect><ClubProfile /></ClubProtect>} />
@@ -66,25 +65,6 @@ function ClubRoute() {
       <Route path="/ticketshow" element={<ClubProtect><MyTickets/></ClubProtect>} />
       <Route path="/managetickets" element={<ClubProtect><ManageTickets/></ClubProtect>} />
       <Route path="/upcomingpage" element={<ClubProtect><UpcomingMatches/></ClubProtect>} />
-
-
-      
-
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
 
 
     </Routes>

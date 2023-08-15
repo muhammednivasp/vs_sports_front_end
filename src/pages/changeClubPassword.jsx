@@ -6,20 +6,15 @@ import { clubApi } from '../utils/api';
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-// import { setUserDetails } from '../redux/userDataSlice'
-
-// import Footer from '../components/footer/footer'
 
 function ChangeClubPassword() {
 
   const isClub = 'club'
 
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
 
   let mailId = clubdatas.email
 
-  //   const dispatch = useDispatch()
   const Navigate = useNavigate()
 
   const [value, setValue] = useState({
@@ -36,12 +31,8 @@ function ChangeClubPassword() {
       [name]: value,
     }));
   };
-  useEffect(() => {
-    console.log(value, "nanae")
-  })
 
   const savechanges = async () => {
-    // e.preventDefault();
     const { Password, NewPassword, PasswordConform, isUser } = value;
 
     if (Password.trim().length < 6 || NewPassword.trim().length < 6 || PasswordConform.trim().length < 6) {
@@ -56,19 +47,16 @@ function ChangeClubPassword() {
       const { data } = await clubApi.patch('/clubpassword', { ...value, EmailId: mailId }, { withCredentials: true });
 
       if (data) {
-        console.log(data, "hiiihiihiihiihiihaaaa")
         if (data.errors) {
           toast.error(data.message);
         } else {
           toast.success(data.message);
-          //   console.log(data,"hiiiiiiii")
           setTimeout(() => {
             Navigate("/club/clubprofile", { state: isClub });
           }, 1000);
         }
       }
     } catch (error) {
-      console.log(error, "hiiiiiiii")
       toast.error(error.response.data.message);
     }
   };
@@ -106,7 +94,6 @@ function ChangeClubPassword() {
           </div>
         </div>
       </div>
-      {/* <Footer/>  */}
     </div>
 
   )

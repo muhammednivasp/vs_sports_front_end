@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { userBaseUrl, clubBaseUrl ,adminBaseUrl} from '../constants/constants'
 
-
 export const userApi = axios.create({
     baseURL: userBaseUrl
 })

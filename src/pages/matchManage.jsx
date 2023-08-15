@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { DateTimePicker } from 'react-rainbow-components';
 import image from '../assets/images/logo/logo.png';
@@ -8,33 +6,19 @@ import bwimg from '../assets/images/player/bw1.jpg';
 import dual from '../assets/images/player/dual.avif'
 import bgb from '../assets/images/player/bgb.jpg'
 import baby from '../assets/images/player/baby.jpg'
-
-
-
-
 import bgimage from '../assets/images/bg/backgroundvssports.jpg';
-// import Footer from '../components/footer/footer';
 import Navbar from '../components/navbar/navbar';
 import { useLocation } from 'react-router-dom';
-// import matchModel from '../ // Import the match model here
 import { clubApi } from '../utils/api';
 import toast from 'react-hot-toast'
 
-
 function MatchManage() {
-
   const location = useLocation();
   const datas = location.state;
-  console.log(datas, 'datas');
-  // setState(datas)
   const [state, setState] = useState(datas)
-
-
   const [teams, setTeams] = useState([])
   const [isMatchOver, setIsMatchOver] = useState(false);
   const [editMatchNumber, setEditMatchNumber] = useState(1);
-
-
 
   const [matchData, setMatchData] = useState({
     matchnumber: 1,
@@ -50,11 +34,9 @@ function MatchManage() {
       secondteamscore: 0,
       secondteamscorers: [],
     },
-    tickets:0,
-    ticketsfee:0
+    tickets: 0,
+    ticketsfee: 0
   });
-
-  console.log(matchData, "matchdata")
 
   const [matchEditData, setMatchEditData] = useState({
     matchnumber: 1,
@@ -70,11 +52,10 @@ function MatchManage() {
       secondteamscore: 0,
       secondteamscorers: [],
     },
-    tickets:0,
+    tickets: 0,
     id: '',
-    ticketsfee:0
+    ticketsfee: 0
   });
-
 
   useEffect(() => {
     const currentDate = new Date();
@@ -89,20 +70,16 @@ function MatchManage() {
     setIsMatchOver(isOver); // Set the correct value for isMatchOver state
   }, [matchData.date, matchData.time]);
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { matchnumber, firstteamid, secondteamid, date, time } = matchData;
-
-      // Convert the time string to a valid date object
       const timeParts = time.split(':');
       const hours = parseInt(timeParts[0], 10);
       const minutes = parseInt(timeParts[1], 10);
       const selectedTime = new Date(date);
       selectedTime.setHours(hours);
       selectedTime.setMinutes(minutes);
-
       if (matchnumber <= 0) {
         toast.error('Match Number should be greater than 1');
         return;
@@ -123,21 +100,13 @@ function MatchManage() {
         },
         { withCredentials: true }
       );
-      console.log(data, 'klk');
       toast.success(data.message);
       setMatch(data.details)
-
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
-
     }
   };
 
-  // const edit = async (item) => {
-  //   setEditMatchNumber(item.matchnumber); // Set the editMatchNumber when the modal is opened
-  //   setEditModal(true);
-  // };
   const edit = async (item) => {
     setMatchEditData({
       ...matchEditData,
@@ -154,12 +123,9 @@ function MatchManage() {
     setEditModal(true);
   };
 
-
   const handleEdit = async (e) => {
     try {
-      const { matchnumber, firstteamid, secondteamid, date, time ,tickets ,ticketsfee} = matchEditData;
-
-      // Convert the time string to a valid date object
+      const { matchnumber, firstteamid, secondteamid, date, time, tickets, ticketsfee } = matchEditData;
       const timeParts = time.split(':');
       const hours = parseInt(timeParts[0], 10);
       const minutes = parseInt(timeParts[1], 10);
@@ -187,18 +153,13 @@ function MatchManage() {
         },
         { withCredentials: true }
       );
-      console.log(data, 'klk');
       toast.success(data.message);
       setMatch(data.details)
       setEditModal(false)
       setModal(false)
 
-
-
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
-
     }
   }
 
@@ -206,12 +167,10 @@ function MatchManage() {
   useEffect(() => {
     const matchfind = async () => {
       const { data } = await clubApi.post('/matches', { ...state }, { withCredentials: true })
-      console.log(data, "hhh");
       setMatch(data.finding)
     }
     matchfind()
   }, [matchData, state, isMatchOver])
-  console.log(match, 'ma');
 
   const [modal, setModal] = useState(false)
   const [data, setData] = useState('')
@@ -220,7 +179,6 @@ function MatchManage() {
   const matchsetup = (item) => {
     const dateString = '2023-07-25T06:15:25.900Z';
     const dateObj = new Date(dateString);
-
     const datePart = dateObj.toISOString().slice(0, 10); // Get the date part (YYYY-MM-DD)
     const timePart = dateObj.toISOString().slice(11, 19); // Get the time part (HH:mm:ss)
     setItem(item)
@@ -229,22 +187,15 @@ function MatchManage() {
     setScorers(item.results?.firstteamscorers)
     setSecondScore(item.results?.secondteamscore)
     setSecondScorers(item.results?.secondteamscorers)
-    console.log('Date Part:', datePart);
-    console.log('Time Part:', timePart);
-
-    // setData(item)
     setModal(true)
   }
 
   const [editModal, setEditModal] = useState(false)
 
-
-
   useEffect(() => {
     try {
       const teamget = async () => {
         const { data } = await clubApi.post('/teamget', { ...state }, { withCredentials: true })
-        console.log(data.teams, "loytrr");
         setTeams(data.teams)
       }
       teamget()
@@ -252,14 +203,12 @@ function MatchManage() {
       console.log(err);
     }
   }, [modal, editModal, matchData])
-  console.log(teams, "jkjk")
 
-  const [team,setTeam] = useState('')
-  const changeScoreDetails = async(team)=>{
+  const [team, setTeam] = useState('')
+  const changeScoreDetails = async (team) => {
     setTeam(team)
     setScoreModal(true)
   }
-
 
   const [values, setValues] = useState('')
   const [score, setScore] = useState('')
@@ -267,54 +216,34 @@ function MatchManage() {
   const [secondScore, setSecondScore] = useState('')
   const [secondScorers, setSecondScorers] = useState([])
 
-  console.log(data.results?.firstteamscorers,"jijij");
-  console.log(data.results?.firstteamscore,"jijij");
-  console.log(score,"jijij");
-
-
-
-
   const handleChange = (e) => {
-    console.log('opop')
     const { value } = e.target;
-    console.log(value,"ooooo");
     setValues(value);
   };
 
   const onSubmitScorer = () => {
-    {team==='first'?
-    setScorers([...scorers,values]):
-    setSecondScorers([...secondScorers,values])}
-
+    {
+      team === 'first' ?
+        setScorers([...scorers, values]) :
+        setSecondScorers([...secondScorers, values])
+    }
     setValues("")
-    
   };
 
-  console.log(values,"lkfs");
-  console.log(scorers,"lkfss");
-
- 
   const scoreChange = (e) => {
     const { value } = e.target;
     team === 'first' ? setScore(value) : setSecondScore(value);
   };
-  
-
   const [scoreModal, setScoreModal] = useState(false)
-
-  const submitScore = async()=>{
-    const response = await clubApi.post('/scorechange',(team==='first'?{id:data._id,score:score,scorers:scorers,team:team}:{id:data._id,score:secondScore,scorers:secondScorers,team:team}), { withCredentials: true })
-    console.log("lopd",response.data.matchResults,"datas")
+  const submitScore = async () => {
+    const response = await clubApi.post('/scorechange', (team === 'first' ? { id: data._id, score: score, scorers: scorers, team: team } : { id: data._id, score: secondScore, scorers: secondScorers, team: team }), { withCredentials: true })
     let newData = response.data.matchResults
     setData(newData)
     setScoreModal(false)
-    
   }
 
-
-  const clearAll = async()=>{
-    const response = await clubApi.post('/scorechange',(team==='first'?{id:data._id,score:0,scorers:[],team:team}:{id:data._id,score:0,scorers:[],team:team}), { withCredentials: true })
-    console.log("lopd",response.data.matchResults,"datas")
+  const clearAll = async () => {
+    const response = await clubApi.post('/scorechange', (team === 'first' ? { id: data._id, score: 0, scorers: [], team: team } : { id: data._id, score: 0, scorers: [], team: team }), { withCredentials: true })
     let newData = response.data.matchResults
     setData(newData)
     setScoreModal(false)
@@ -323,22 +252,14 @@ function MatchManage() {
     setSecondScore(0)
     setSecondScorers([])
   }
-  
-
-
-
 
   return (
     <div className="min-h-screen relative">
       <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})`, filter: modal ? "blur(30px)" : "none" }}>
-        {/* Navbar */}
         <Navbar data="club" />
 
-
         <div className="flex flex-col xl:flex-row mt-12" >
-
-          {/* Form */}
-          <form className="md:w-[40rem] md:h-[45rem] mt-12 bg-cover bg-center bg-no-repeat shadow-md rounded p-16 m-2" onSubmit={handleSubmit} style={{ backgroundImage: `url(${bwimg})`}} >
+          <form className="md:w-[40rem] md:h-[45rem] mt-12 bg-cover bg-center bg-no-repeat shadow-md rounded p-16 m-2" onSubmit={handleSubmit} style={{ backgroundImage: `url(${bwimg})` }} >
             <div className='justify-center flex'>
               <h2 className="text-2xl font-bold mb-6 text-emerald-500">Add Match Details</h2>
             </div>
@@ -472,46 +393,45 @@ function MatchManage() {
                     <div class="container mx-auto py-12 ">
                       <div class="mx-auto sm:w-6/12 lg:w-8/12 xl:w-[100%] ">
 
-                      {(match.length===0)?<>
-                        <h1 className='text-3xl text-red-500 font-medium text-center items-center'>No Matches Found !</h1>
-                        <h1 className='text-xl text-blue-500 font-medium text-center items-center'>Please Add Matches</h1>
+                        {(match.length === 0) ? <>
+                          <h1 className='text-3xl text-red-500 font-medium text-center items-center'>No Matches Found !</h1>
+                          <h1 className='text-xl text-blue-500 font-medium text-center items-center'>Please Add Matches</h1>
                         </>
-                        :
-                         <>
+                          :
+                          <>
 
-                        {match.map((item) => (
-                          <div class="mt-2 " key={item._id}>
-                            <div class="relative flex flex-col justify-end overflow-hidden rounded-b-xl pt-6 ">
-                              <div class="group relative flex cursor-pointer justify-between rounded-xl bg-amber-200 before:absolute before:inset-y-0 before:right-0 before:w-1/2 before:rounded-r-xl before:bg-gradient-to-r before:from-transparent before:to-amber-600 before:opacity-0 before:transition before:duration-500 hover:before:opacity-100">
-                                <div class="relative  space-y-1 p-8">
-                                  <h4 class="text-lg text-amber-900">Match No :-  {item.matchnumber}</h4>
-                                  <div class="relative h-20 text-amber-800 text-sm">
-                                    <div className='flex'>
-                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.firstteam.teamname}</span>
-                                      <span className='mx-2 text-xl'>Vs</span>
-                                      <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.secondteam.teamname}</span>
+                            {match.map((item) => (
+                              <div class="mt-2 " key={item._id}>
+                                <div class="relative flex flex-col justify-end overflow-hidden rounded-b-xl pt-6 ">
+                                  <div class="group relative flex cursor-pointer justify-between rounded-xl bg-amber-200 before:absolute before:inset-y-0 before:right-0 before:w-1/2 before:rounded-r-xl before:bg-gradient-to-r before:from-transparent before:to-amber-600 before:opacity-0 before:transition before:duration-500 hover:before:opacity-100">
+                                    <div class="relative  space-y-1 p-8">
+                                      <h4 class="text-lg text-amber-900">Match No :-  {item.matchnumber}</h4>
+                                      <div class="relative h-20 text-amber-800 text-sm">
+                                        <div className='flex'>
+                                          <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.firstteam.teamname}</span>
+                                          <span className='mx-2 text-xl'>Vs</span>
+                                          <span class="transition duration-300 group-hover:invisible group-hover:opacity-0 text-2xl">{item.secondteam.teamname}</span>
+                                        </div>
+                                        <button href="" class="mt-10 mx-2 flex items-center gap-3 invisible absolute left-0 top-0 translate-y-3 transition duration-300 group-hover:visible group-hover:translate-y-0" onClick={() => { matchsetup(item) }}>
+                                          <span>View now </span>
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 -translate-x-4 transition duration-300 group-hover:translate-x-0" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                          </svg>
+                                        </button>
+                                      </div>
                                     </div>
-                                    <button href="" class="mt-10 mx-2 flex items-center gap-3 invisible absolute left-0 top-0 translate-y-3 transition duration-300 group-hover:visible group-hover:translate-y-0" onClick={() => { matchsetup(item) }}>
-                                      <span>View now </span>
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 -translate-x-4 transition duration-300 group-hover:translate-x-0" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                      </svg>
-                                    </button>
+                                    <img class="absolute bottom-2 right-6 w-[6rem] transition duration-300 group-hover:scale-[1.4]" src={yellowimg} alt="" />
                                   </div>
                                 </div>
-                                <img class="absolute bottom-2 right-6 w-[6rem] transition duration-300 group-hover:scale-[1.4]" src={yellowimg} alt="" />
+
+
                               </div>
-                            </div>
-
-
-                          </div>
-                        ))}
-                        </>
-                         }     
+                            ))}
+                          </>
+                        }
                       </div>
                     </div>
                   </div>
-                  {/* ... */}
                 </div>
               </div>
             </div>
@@ -556,20 +476,17 @@ function MatchManage() {
                   </div>
 
                   <div className='flex justify-center m-2'>
-                    <span class="transition duration-300 text-center text-xl font-semibold">Scorers:[<span className='text-gray-400'> {(data.results?.firstteamscorers).map((item,index)=>(<div key={index}> {item}</div>))}  </span>]</span>
+                    <span class="transition duration-300 text-center text-xl font-semibold">Scorers:[<span className='text-gray-400'> {(data.results?.firstteamscorers).map((item, index) => (<div key={index}> {item}</div>))}  </span>]</span>
                     <span className='mx-6 text-xl'></span>
-                    <span class="transition duration-300 text-center text-xl font-semibold">Scorers:[<span className='text-gray-400'> {(data.results?.secondteamscorers).map((item,index)=>(<div key={index}> {item}</div>))}  </span>]</span>
+                    <span class="transition duration-300 text-center text-xl font-semibold">Scorers:[<span className='text-gray-400'> {(data.results?.secondteamscorers).map((item, index) => (<div key={index}> {item}</div>))}  </span>]</span>
                   </div>
                   <div className='flex justify-center m-2'>
-                    <button class="text-center text-xl font-semibold border-2 border-cyan-500 rounded-full mt-2 p-2 text-white hover:bg-cyan-500" onClick={() =>changeScoreDetails('first')}>Change Score</button>
+                    <button class="text-center text-xl font-semibold border-2 border-cyan-500 rounded-full mt-2 p-2 text-white hover:bg-cyan-500" onClick={() => changeScoreDetails('first')}>Change Score</button>
                     <span className='mx-6 text-xl'></span>
-                    <button class="text-center text-xl font-semibold border-2 border-cyan-500 rounded-full mt-2 p-2 text-white hover:bg-cyan-500" onClick={() =>changeScoreDetails('second')}>Change Score</button>
+                    <button class="text-center text-xl font-semibold border-2 border-cyan-500 rounded-full mt-2 p-2 text-white hover:bg-cyan-500" onClick={() => changeScoreDetails('second')}>Change Score</button>
 
                   </div>
-
                 </div>
-
-
               </div>
               <img class="absolute bottom-2 right-6 w-[6rem] transition duration-300 group-hover:scale-[1.4]" src={yellowimg} alt="" />
             </div>
@@ -593,9 +510,7 @@ function MatchManage() {
       {editModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 " >
           <div className="bg-blue-300 p-8 rounded-lg z-10  " >
-            {/* <h2 className="text-2xl font-bold mb-4 text-center">Match No :- {data.matchnumber}</h2>  */}
-            {/* <div class="group relative flex cursor-pointer justify-center rounded-xl bg-amber-200 before:absolute before:inset-y-0 before:right-0 before:w-1/2 before:rounded-r-xl before:bg-gradient-to-r before:from-transparent before:to-amber-600 before:opacity-0 before:transition before:duration-500 hover:before:opacity-100 w-[40rem] h-[40rem]"> */}
-            <div className="md:w-[40rem] md:h-[45rem] mt-12  shadow-md rounded p-20 m-2 bg-cover bg-no-repeat bg-center justify-center" style={{ backgroundImage: `url(${baby})`}}>
+            <div className="md:w-[40rem] md:h-[45rem] mt-12  shadow-md rounded p-20 m-2 bg-cover bg-no-repeat bg-center justify-center" style={{ backgroundImage: `url(${baby})` }}>
               <div className='justify-center flex'>
                 <h2 className="text-2xl font-bold mb-4">Add Match Details</h2>
               </div>
@@ -671,38 +586,36 @@ function MatchManage() {
               </div>
 
               <div className="mb-4">
-              <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
-                Tickets available
-              </label>
-              <input
-                type="number"
-                id="tickets"
-                name="tickets"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-                value={matchEditData.tickets}
-                min={0}
-                onChange={(e) => setMatchEditData({ ...matchEditData, tickets: e.target.value })}
-                required
-              />
-            </div>
+                <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
+                  Tickets available
+                </label>
+                <input
+                  type="number"
+                  id="tickets"
+                  name="tickets"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  value={matchEditData.tickets}
+                  min={0}
+                  onChange={(e) => setMatchEditData({ ...matchEditData, tickets: e.target.value })}
+                  required
+                />
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
-                Ticket Fee
-              </label>
-              <input
-                type="number"
-                id="ticketsfee"
-                name="ticketsfee"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
-                value={matchEditData.ticketsfee}
-                min={0}
-                onChange={(e) => setMatchEditData({ ...matchEditData, ticketsfee: e.target.value })}
-                required
-              />
-            </div>
-
-
+              <div className="mb-4">
+                <label className="block text-black text-lg font-medium mb-2" htmlFor="secondteam">
+                  Ticket Fee
+                </label>
+                <input
+                  type="number"
+                  id="ticketsfee"
+                  name="ticketsfee"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  value={matchEditData.ticketsfee}
+                  min={0}
+                  onChange={(e) => setMatchEditData({ ...matchEditData, ticketsfee: e.target.value })}
+                  required
+                />
+              </div>
 
               <div className="flex items-center justify-between">
                 <button
@@ -714,8 +627,6 @@ function MatchManage() {
               </div>
 
             </div>
-
-            {/* <img class="absolute bottom-2 right-6 w-[6rem] transition duration-300 group-hover:scale-[1.4]" src={yellowimg} alt="" /> */}
             <button
               className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={() => setEditModal(false)}
@@ -723,8 +634,6 @@ function MatchManage() {
               Close
             </button>
           </div>
-
-          {/* </div> */}
         </div>
       )}
 
@@ -732,8 +641,8 @@ function MatchManage() {
       {scoreModal &&
         <div className="fixed inset-0 flex flex-col items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white rounded-lg z-10 flex flex-col p-2 text-center">
-          <h2 className='text-xl font-medium text-green-500 m-2'>First Team Score Details</h2>
-            
+            <h2 className='text-xl font-medium text-green-500 m-2'>First Team Score Details</h2>
+
             <div className="bg-red-300 p-12 rounded-lg justify-center">
               <div>
                 <input
@@ -741,14 +650,13 @@ function MatchManage() {
                   value={values}
                   className="px-4 py-2 border border-gray-300 rounded-lg w-full md:w-80 lg:w-96 xl:w-112 text-center"
                   placeholder="Enter scorer name"
-                 onChange={handleChange}/>
+                  onChange={handleChange} />
               </div>
 
-              
               <div className='mt-2'>
                 <button
                   className="px-4 py-2 bg-none border-2 hover:bg-green-400 text-black font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112 "
-                onClick={()=>onSubmitScorer()}>
+                  onClick={() => onSubmitScorer()}>
                   Add
                 </button>
               </div>
@@ -759,63 +667,54 @@ function MatchManage() {
                   className="px-4 py-2 border bg-blue-200 border-gray-300 rounded-lg w-full md:w-80 lg:w-96 xl:w-112 mt-2 h-12 overflow-y-auto text-center"
                   placeholder=""
                 >
-                  {(team==='first'?scorers.length===0:secondScorers.length===0)?<h3 className='text-red-700'>No Scorers !</h3>:(
+                  {(team === 'first' ? scorers.length === 0 : secondScorers.length === 0) ? <h3 className='text-red-700'>No Scorers !</h3> : (
                     <>
-                  {(team==='first'?scorers:secondScorers).map((item,index)=>(
-                  <div className='border-2 border-blue-500 m-2' key={index}>
-                  <h2 className='text-black'>{index+1}.{item}</h2>
-                  </div>
-                  ))}
-               
-                  </>
+                      {(team === 'first' ? scorers : secondScorers).map((item, index) => (
+                        <div className='border-2 border-blue-500 m-2' key={index}>
+                          <h2 className='text-black'>{index + 1}.{item}</h2>
+                        </div>
+                      ))}
+
+                    </>
                   )
                   }
                 </div>
               </div>
 
-              
-
             </div>
             <div className='justify-center p-12'>
-            <div>
+              <div>
                 <input
                   type="number"
-                  value={team==='first'?score:secondScore}
+                  value={team === 'first' ? score : secondScore}
                   className="px-4 py-2 border border-gray-300 rounded-lg w-full md:w-60 lg:w-60 xl:w-100 text-center"
                   placeholder="Enter Score"
-                onChange={scoreChange}/>
+                  onChange={scoreChange} />
               </div>
-            <div className='mt-2 flex flex-col'>
-              <button
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112"
-              onClick={submitScore}>
-                Submit
-              </button>
-              {(team==='first'?scorers.length : secondScorers.length )&& <button
-                className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112 mt-2"
-              onClick={clearAll}>
-                clear all
-              </button>}
-              
-            </div>
-            <div className='mt-2'>
-              <button
-                className="px-4 py-2 border-2 hover:bg-yellow-600 text-yellow-600 hover:text-white font-semibold rounded-lg w-full md:w-60 lg:w-60 xl:w-100"
-              onClick={()=>setScoreModal(false)}>
-                Close
-              </button>
-              
-            </div>
+              <div className='mt-2 flex flex-col'>
+                <button
+                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112"
+                  onClick={submitScore}>
+                  Submit
+                </button>
+                {(team === 'first' ? scorers.length : secondScorers.length) && <button
+                  className="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112 mt-2"
+                  onClick={clearAll}>
+                  clear all
+                </button>}
+              </div>
+              <div className='mt-2'>
+                <button
+                  className="px-4 py-2 border-2 hover:bg-yellow-600 text-yellow-600 hover:text-white font-semibold rounded-lg w-full md:w-60 lg:w-60 xl:w-100"
+                  onClick={() => setScoreModal(false)}>
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-
       }
-
-
     </div>
-
-
 
   );
 }

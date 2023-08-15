@@ -2,15 +2,12 @@
 import React from 'react';
 
 const Sidebar = () => {
-  // Sample data for the sidebar links
   const sidebarLinks = [
     { title: 'Graphs', link: '/admin/home' },
     { title: 'Clubs', link: '/admin/home/club' },
     { title: 'Users', link: '/admin/home/users' },
     { title: 'Tournaments', link: '/admin/home/tournaments' },
     { title: 'Matches', link: '/admin/home/matches' },
-    // { title: 'Tickets', link: '/admin/home/tickets' },
-
 
   ];
 

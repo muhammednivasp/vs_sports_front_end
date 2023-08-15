@@ -5,14 +5,10 @@ import { Chart as ChartJs, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJs.register(ArcElement, Tooltip, Legend);
 
-function Graph() {
+function SecondGraph() {
 
   const [users, setUsers] = useState(0);
   const [clubs, setClubs] = useState(0);
-  const [tournaments, setTournaments] = useState(0);
-  const [matches, setMatches] = useState(0);
-  const [teams, setTeams] = useState(0);
-
 
   const data = {
     labels: ['Users','Clubs'],
@@ -20,20 +16,8 @@ function Graph() {
       {
         label: 'Poll',
         data: [clubs,users], // Updated data values for example
-        backgroundColor: ['green', 'blue'],
-        borderColor: ['green', 'blue'],
-      },
-    ],
-  };
-
-  const secondData = {
-    labels: ['Tournaments','Matches','Participation'],
-    datasets: [
-      {
-        label: 'Poll',
-        data: [tournaments,matches,teams], // Updated data values for example
-        backgroundColor: ['orange', 'violet', 'yellow'],
-        borderColor: ['orange', 'violet', 'yellow'],
+        backgroundColor: ['blue', 'yellow'],
+        borderColor: ['yellow', 'blue'],
         circumference:180,
         rotation:270
       },
@@ -50,16 +34,8 @@ function Graph() {
     const datafetch = async () => {
       const { data } = await adminApi.get('/userscount', { withCredentials: true });
       const clubdata = await adminApi.get('/clubscount', { withCredentials: true });
-      const tournaments = await adminApi.get('/tournamentscount', { withCredentials: true });
-      const matches = await adminApi.get('/matchescount', { withCredentials: true });
-      const teams = await adminApi.get('/teamscount', { withCredentials: true });
-
       setUsers(data.count);
       setClubs(clubdata.data.count)
-      setTournaments(tournaments.data.count)
-      setMatches(matches.data.count)
-      setTeams(teams.data.count)
-
     };
     datafetch();
   }, []);
@@ -82,14 +58,9 @@ function Graph() {
       </div>
       <div className="w-full md:w-2/2 md:px-2 mb-4 md:mb-0">
 
-      <div className="mt-6 md:mx-auto flex flex-col md:flex-row">
-        <div className=" w-[20rem] h-[20rem] md:h-[40rem] bg-white p-4 md:p-8 flex">
+      <div className="mt-6">
+        <div className=" w-[20rem] h-[20rem] md:h-[40rem] bg-white p-4 md:p-8">
           <Doughnut data={data} options={options} />
-
-        </div>
-        <div className=" w-[20rem] h-[20rem] md:h-[40rem] bg-white p-4 md:p-8 flex">
-          <Doughnut data={secondData} options={options} />
-
         </div>
       </div>
       </div>
@@ -98,4 +69,4 @@ function Graph() {
   );
 }
 
-export default Graph;
+export default SecondGraph;

@@ -9,11 +9,11 @@ import UserProfile from "../../pages/userProfile";
 import EditUserProfile from "../../pages/editUserProfile";
 import ChangeUserPassword from "../../pages/changeUserPassword";
 import EmailVerify from "../../components/EmailVerify/emailVerify";
-import EmailVerifyToEdit from "../../components/EmailVerify/EmailVerifyToEdit";
-import EmailForgotVerify from "../../components/EmailVerify/EmailForgotVerify";
+import EmailVerifyToEdit from "../../components/EmailVerify/emailVerifyToEdit";
+import EmailForgotVerify from "../../components/EmailVerify/emailForgotVerify";
 import ShowAnnounced from "../../components/showannounced/showAnnounced";
 import TournamentPage from "../../pages/tournamentpage";
-import ClubsPage from "../../pages/clubspage";
+import ClubsPage from "../../pages/clubsPage";
 import Failure from "../../pages/failure";
 import SuccessPage from "../../pages/successpage";
 import MatchesView from "../../pages/matchesView";
@@ -35,7 +35,6 @@ function UserRoute() {
       <Route path="/profile" element={<UserProtect><UserProfile /></UserProtect>} />
       <Route path="/editprofile" element={<UserProtect><EditUserProfile /></UserProtect>} />
       <Route path="/:id/verifytoedit/:token" element={<UserProtect><EmailVerifyToEdit /></UserProtect>} />
-
       <Route path="/changepassword" element={<UserProtect><ChangeUserPassword /></UserProtect>} />
       <Route path="/show" element={<UserProtect><ShowAnnounced /></UserProtect>} />
       <Route path="/tournamentpage" element={<UserProtect><TournamentPage /></UserProtect>} />
@@ -48,17 +47,6 @@ function UserRoute() {
       <Route path="/upcomingpage" element={<UserProtect><UpcomingMatches/></UserProtect>} />
 
       
-
-
-      
-
-
-
-
-
-
-
-
     </Routes>
   );
 }

@@ -11,11 +11,8 @@ import { setAdminDetails } from '../../redux/adminDataSlice'
 const Navbar = ({ showSidebar, toggleSidebar }) => {
   const location = useLocation();
 
-  // const userdatas = useSelector((state) => (data === 'club' ? state.club : state.user));
-  // console.log(userdatas, "koi")
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
 
   const logout = () => {
        dispatch(
@@ -29,15 +26,9 @@ const Navbar = ({ showSidebar, toggleSidebar }) => {
   };
 
   const home = () => {
-    // console.log("hihohiohihoih")
       navigate("/admin/home")
    
   }
-
-  // const profile = (user) => {
-  //     navigate("/club/clubprofile")
-    
-  // }
 
   return (
     <nav className="bg-green-600 bg-opacity-100 p-4 flex flex-wrap items-center  justify-between fixed w-full top-0 z-30">
@@ -52,7 +43,6 @@ const Navbar = ({ showSidebar, toggleSidebar }) => {
           onClick={toggleSidebar}
           
         >
-        {/* {showSidebar ? "Hide" : "Show"}  */}
         <BiMenu size={20} className="ml-2" />
         </button>
       <span className="text-white text-center font-bold text:xl md:text-2xl flex-grow">
@@ -66,12 +56,7 @@ const Navbar = ({ showSidebar, toggleSidebar }) => {
         <span style={{ color: "white" }}>s</span>
       </span>
       <div className="flex items-center mt-0 md:mt-0">
-        {/* <button onClick={() => profile(userdatas.isUser)}>
-          <img src={profilelogo} alt="Profile Icon" className="h-6 mr-5 bg-white" />
-        </button> */}
         <button className="text-white font-medium hover:text-gray-300 mr-5" onClick={() => logout()}>Logout</button>
-        {/* Hamburger menu icon to show/hide the sidebar on small screens */}
-    
       </div>
     </nav>
   );

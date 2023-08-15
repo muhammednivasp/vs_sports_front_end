@@ -23,8 +23,6 @@ const userSlice = createSlice({
             state.name = action.payload.name;
             state.isGoogle = action.payload.isGoogle;
 
-
-
         }
     }
 })

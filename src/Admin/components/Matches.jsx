@@ -4,22 +4,18 @@ import { adminApi } from '../../utils/api';
 function Matches() {
 
     const [matches, setMatches] = useState([])
-    // const [block, setBlock] = useState(false)
 
     useEffect(() => {
         const datafetch = async () => {
             const { data } = await adminApi.get('/matches', { withCredentials: true })
-            console.log(data, "lklklklkk");
             setMatches(data.matchesdata)
         }
         datafetch()
     }, [])
-    // console.log(matches, "jijijij")
 
 
     const handleBlock = async (item, status) => {
         const { data } = await adminApi.post('/matches', item, { withCredentials: true })
-        console.log(data, "jjj");
         setMatches(data.matches)
     }
     return (
@@ -34,9 +30,6 @@ function Matches() {
                             <div className='overflow-x-auto'>
                                 <div>
                                     <div className='flex bg-green-300 h-16 xl:w-[70rem] md:w-[30rem] lg:w-[40rem] sm:w-[20rem] m-2 mx-2'>
-                                        {/* <div className=' overflow-hidden '>
-                 <h1 className='ml-2 mt-5'>{index+1}</h1>
-               </div> */}
                                         <div className=' overflow-hidden w-[15%]'>
                                             <h1 className='ml-1 mt-5 text-sm'>Match:{item.matchnumber}</h1>
                                         </div>

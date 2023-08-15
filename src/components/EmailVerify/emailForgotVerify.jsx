@@ -6,9 +6,7 @@ import toast from 'react-hot-toast'
 
 import { userApi } from '../../utils/api';
 
-
 export default function EmailForgotVerify() {
-  console.log("hoihoi")
   const [validUrl, setValidUrl] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -35,14 +33,12 @@ export default function EmailForgotVerify() {
       try {
         const { data } = await userApi.patch('forgotpassword', { ...value, userId: userId, token: token }, { withCredentials: true })
 
-        console.log(data, "loytrr");
         toast.success(data.message);
         setTimeout(() => {
           Navigate('/user/login', { state: 'user' });
         }, 2000)
       } catch (error) {
         toast.error(error.response.data.message);
-
       }
     }
   };

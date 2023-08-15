@@ -6,21 +6,13 @@ import { clubApi } from '../utils/api';
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-
-// import { setClubDetails } from '../redux/clubDataSlice'
 import { setTempDetails } from '../redux/updateDataSlice';
-
-
-
-
-// import Footer from '../components/footer/footer'
 
 function EditClubProfile() {
 
   const isClub = 'club'
 
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
 
   let mailId = clubdatas.email
 
@@ -42,12 +34,8 @@ function EditClubProfile() {
       [name]: value,
     }));
   };
-  useEffect(() => {
-    console.log(value, "nanae")
-  })
 
   const savechanges = async () => {
-    // e.preventDefault();
     const { email, clubRegisterNo, location, name, isUser } = value;
 
     if (email.trim() === '' || name.trim() === '' || location.trim() === '' || clubRegisterNo.trim() === '') {
@@ -55,38 +43,20 @@ function EditClubProfile() {
     }
 
     try {
-
       dispatch(setTempDetails({
         data: value
       }))
 
       const { data } = await clubApi.patch('/editclubprofile', { ...value, EmailId: mailId }, { withCredentials: true });
 
-
       if (data) {
-        console.log(data, "hiiihiihiihiihiihaaaa")
         if (data.errors) {
           toast.error(data.message);
         } else {
           toast.success(data.message);
-          // dispatch(setClubDetails({
-          //   id: data.clubExist._id,
-          //   email: data.clubExist.email,
-          //   isUser: data.clubExist.isUser,
-          //   name: data.clubExist.clubname,
-          //   clubRegisterNo: data.clubExist.registration,
-          //   location: data.clubExist.location,
-
-          //  }))
-
-          // console.log(data,"hiiiiiiii")
-          // setTimeout(() => {
-          //   Navigate("/club/clubprofile",{state: isClub });
-          // }, 1000);
         }
       }
     } catch (error) {
-      console.log(error, "hiiiiiiii")
       toast.error(error.response.data.message);
     }
   };
@@ -96,13 +66,10 @@ function EditClubProfile() {
     <div className="min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${background})` }}>
       <Navbar data={clubdatas.isUser} />
       <div className="container mx-auto ">
-        {/* Content of the User Profile page */}
         <div className=" flex flex-col items-center justify-center pt-32">
-          {/* Heading */}
           <h2 className="text-2xl text-blue-700 font-bold ">Edit Profile</h2>
 
           <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12 xm:w-9/12 xs:w-9/12 bg-white bg-opacity-50 rounded-lg flex flex-col justify-between items-center m-10">
-            {/* Box Content */}
 
             <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-50" type="text" id="name" name="name" placeholder={clubdatas.name} onChange={handleChange}></input>
 
@@ -126,7 +93,6 @@ function EditClubProfile() {
           </div>
         </div>
       </div>
-      {/* <Footer/>  */}
     </div>
 
   )

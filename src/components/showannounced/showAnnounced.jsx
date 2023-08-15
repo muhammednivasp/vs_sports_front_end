@@ -8,21 +8,16 @@ import { clubApi, userApi } from '../../utils/api'
 import { useSelector, useDispatch } from 'react-redux'
 import toast from 'react-hot-toast'
 
-
-
 function ShowAnnounced() {
 
   const Navigate = useNavigate()
   const location = useLocation()
 
   const data = location.state
-  console.log(data, "iudevssss")
   const Id = data?._id 
   const isUser = data.isUser
-  // setId(Id)
 
   const clubdatas = useSelector((state) => state[isUser === 'user' ? 'user' : 'club']);
-  console.log(clubdatas, "ioioissssssssssssssss")
 
   const [id, setId] = useState(Id)
 
@@ -32,10 +27,7 @@ function ShowAnnounced() {
   useEffect(() => {
     const limitcheck = async () => {
       try {
-        console.log(id, "ffffffffff");
-
         const { data } = await clubApi.post('/limit', { id })
-        console.log(data.details.teamsrequired, "fffffffff,kkkkkkkkkkkkkkkkkf");
         setLimit(data.details.teamsrequired)
       } catch (error) {
         console.log(error);

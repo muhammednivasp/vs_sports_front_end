@@ -30,8 +30,6 @@ const temppersistReducer = persistReducer(tempConfig, tempReducer);
 const adminpersistReducer = persistReducer(adminConfig, adminReducer);
 
 
-
-
 const Store = configureStore({
   reducer: {
     user: persistedReducer,

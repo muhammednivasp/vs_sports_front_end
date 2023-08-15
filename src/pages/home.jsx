@@ -1,6 +1,5 @@
 
-
-import React from 'react';
+import React,{useState} from 'react';
 import Footer from '../components/footer/footer';
 import Navbar from '../components/navbar/navbar';
 import Tournaments from '../components/tournamentShow/tournament';
@@ -11,32 +10,26 @@ import playerimg from '../assets/images/player/portrait.jpg'
 import fiveimg from '../assets/images/player/fiveimg.avif'
 import secondimg from '../assets/images/player/secondimg.webp'
 import threeimg from '../assets/images/player/threeimg.avif'
-// import blackyone from '../assets/images/player/blacky1.avif'
-// import blackytwo from '../assets/images/player/blackycenter.avif'
-// import blackythree from '../assets/images/player/blackyright.avif'
-
-
-
 import child from '../assets/images/player/child.jpg'
-
-
-
-// import { useDispatch,useSelector } from 'react-redux';
-// import { setUserDetails } from '../redux/userDataSlice'
 import { useLocation, useNavigate } from 'react-router-dom'
-
+import Loader from '../components/loader/loader';
 
 function Home() {
 
   const location = useLocation()
   const isClub = location.state
-  console.log(isClub, "iudev")
-
+  const [loader, setLoader] = useState(true);
 
   return (
-
+    <div className='justify-center'>
+    {setTimeout(()=>{
+      setLoader(false)
+   },500)}
+    {loader?<Loader/> :
     <div className="flex flex-col min-h-custom bg-cover bg-center bg-no-repeat relative " style={{ backgroundImage: `url(${bgimage})` }}>
+
       <Navbar data={isClub} />
+
 
       <Tournament data={isClub} />
       <tr className='h-2 mb-10 w-3/5  bg-blend-saturation bg-black opacity-60'></tr>
@@ -57,11 +50,9 @@ function Home() {
       }
     `}</style>
     </div>
-
+     }  
+    </div>
   );
 }
 
 export default Home;
-
-
-

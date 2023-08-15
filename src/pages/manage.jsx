@@ -11,28 +11,16 @@ import child from '../assets/images/player/child.jpg'
 import left from '../assets/images/player/left.webp'
 import center from '../assets/images/player/centerplayer.jpg'
 import yellowimg from '../assets/images/player/yellowplayer.png';
-
-
 import pngwing from '../assets/images/player/pngwing.com.png'
 import toast from 'react-hot-toast'
-
-
-
-
-
-// import { setclubDetails } from '../redux/clubDataSlice'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { clubApi } from '../utils/api';
 
 function ManageTournaments() {
-
   const clubdatas = useSelector((state) => state.club);
-  console.log(clubdatas, "ioioi")
-
   const clubId = clubdatas.id
-
   const Navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [datas, setDatas] = useState([]);
@@ -41,10 +29,6 @@ function ManageTournaments() {
   const [tournamentModal, setTournamentModal] = useState(false);
   const [statusModal, setStatusModal] = useState(false);
   const [ticketModal, setTicketModal] = useState(false)
-
-
-
-
 
   const AnnounceTournament = () => {
     Navigate("/club/announce")
@@ -55,67 +39,48 @@ function ManageTournaments() {
   }
 
   const ManageTickets = async () => {
-    console.log("jijij", clubId)
     try {
       const { data } = await clubApi.post('/tournament', { clubId }, { withCredentials: true })
-      console.log(data.details, "loytrr");
-      // let final = data.details.filter((item) => new Date(item.lastdate) > Date.now())
-      // console.log(final, "filter")
       setDatas(data.details)
       setTicketModal(true)
-      // toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
   }
 
-
   const ManageMatches = async () => {
     const { data } = await clubApi.post('/tournament', { clubId }, { withCredentials: true })
-    console.log(data.details, "loytrr");
     setDatas(data.details)
     setMatchModal(true)
 
   }
 
   const Announced = async (clubId) => {
-    console.log("jijij", clubId)
     try {
       const { data } = await clubApi.post('/announce', { clubId }, { withCredentials: true })
-      console.log(data.details, "loytrr");
       let final = data.details.filter((item) => new Date(item.lastdate) > Date.now())
-      console.log(final, "filter")
       setDatas(data.details)
       setIsModalOpen(true)
-      // toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
-
   }
 
   const Tournament = async (clubId) => {
-    console.log("jijij", clubId)
     try {
       const { data } = await clubApi.post('/tournament', { clubId }, { withCredentials: true })
-      console.log(data.details, "loytrr");
-      // let final = data.details.filter((item) => new Date(item.lastdate) > Date.now())
-      // console.log(final, "filter")
       setDatas(data.details)
       setTournamentModal(true)
-      // toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
   }
 
   const Show = (value) => {
-    console.log(value, "iddddddddddddddddddddddddddd")
     Navigate(`/club/showannounced`, { state: value })
   }
 
   const ShowTournament = (value) => {
-    console.log(value, "iddddddddddddddddddddddddddd")
     Navigate(`/club/showtournament`, { state: value })
   }
 
@@ -123,7 +88,6 @@ function ManageTournaments() {
     tournamentname: '',
     location: '',
     tournamenttype: ''
-
   })
 
   const handleChange = (e) => {
@@ -133,14 +97,9 @@ function ManageTournaments() {
       [name]: value,
     }));
   };
-  console.log(value, "goal");
-
 
   const saveChanges = async (clubId) => {
-    // e.preventDefault();
     const { tournamentname, location, tournamenttype } = value;
-    console.log(value, "valuessss")
-
 
     if (tournamentname.trim() === '' || location.trim() === '' || tournamenttype.trim() === '') {
       return toast.error('All fields are required');
@@ -150,14 +109,10 @@ function ManageTournaments() {
       const { data } = await clubApi.post('/addtournament', { ...value, club: clubId }, { withCredentials: true });
 
       if (data) {
-        // console.log(data, "hiiihiihiihiihiihaaaa")
         if (data.errors) {
-          console.log(data.errors)
           toast.error(data.message);
         } else {
           toast.success(data.message);
-
-          // console.log(data, "hiiiiiiii")
           setaddModal(false)
           setTimeout(() => {
             Navigate("/club/manage");
@@ -165,11 +120,8 @@ function ManageTournaments() {
         }
       }
     } catch (error) {
-      // console.log(error, "hiiiiiiii")
       toast.error(error.response.data.message);
     }
-
-    // const currentDate = new Date().toISOString().split('T')[0];
   };
 
   const selectTournament = (item) => {
@@ -178,35 +130,26 @@ function ManageTournaments() {
 
   const Matches = (clubid) => {
     setStatusModal(true)
-    // Navigate("/club/matches",{state:clubid})
   }
 
   const statussubmit = (status, clubid) => {
     Navigate("/club/matches", { state: { clubid: clubid, status: status } })
-
   }
 
   const [matches, setMatches] = useState(false)
   const [matchdatas, setMatchDatas] = useState([])
 
-
   const ShowTickets = async (item) => {
-    console.log(item, "kkjj");
     const { data } = await clubApi.post('/matches', { ...item }, { withCredentials: true })
-    console.log(data, "loytrr");
     setMatchDatas(data.finding)
     setMatches(true)
-    // Navigate("/club/managetickets", { state:{item:item,clubdatas:clubdatas}})
   }
 
-  const mangingTickets = (item)=>{
-    console.log(item,"kljh");
-    Navigate("/club/managetickets",{state:{item:item,clubdatas:clubdatas}})
-
+  const mangingTickets = (item) => {
+    Navigate("/club/managetickets", { state: { item: item, clubdatas: clubdatas } })
   }
 
   return (
-
     <div className="min-h-screen relative">
       <div className=" inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})`, filter: isModalOpen || addModal || tournamentModal || matches ? "blur(30px)" : "none" }}>
         <Navbar data={'club'} />
@@ -287,11 +230,9 @@ function ManageTournaments() {
                       <div className="flex items-center">
                         {new Date(item.lastdate) > Date.now() ? (
                           <svg className="w-14 h-11 rounded-full p-2 border border-green-200 text-blue-400 bg-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         ) : (
                           <svg className="w-14 h-11 rounded-full p-2 border border-red-200 text-blue-400 bg-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         )}
                         <div className="flex flex-col ml-3 w-full">
@@ -352,7 +293,6 @@ function ManageTournaments() {
                   <option className='text-black font-medium' value="League">League</option>
                   <option className='text-black font-medium' value="Nockout">Nockout</option>
                   <option className='text-black font-medium' value="Combo">Combo</option>
-                  {/* Add more options for different categories */}
                 </select>
 
                 <div className="flex justify-center">
@@ -382,11 +322,9 @@ function ManageTournaments() {
                       <div className="flex items-center">
                         {item.status === true ? (
                           <svg className="w-14 h-11 rounded-full p-2 border border-green-200 text-blue-400 bg-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         ) : (
                           <svg className="w-14 h-11 rounded-full p-2 border border-red-200 text-blue-400 bg-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         )}
                         <div className="flex flex-col ml-3 w-full">
@@ -424,11 +362,9 @@ function ManageTournaments() {
                       <div className="flex items-center">
                         {item.status === true ? (
                           <svg className="w-14 h-11 rounded-full p-2 border border-green-200 text-blue-400 bg-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         ) : (
                           <svg className="w-14 h-11 rounded-full p-2 border border-red-200 text-blue-400 bg-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                           </svg>
                         )}
                         <div className="flex flex-col ml-3 w-full">
@@ -455,7 +391,6 @@ function ManageTournaments() {
 
       {statusModal &&
         <div className="fixed inset-0 flex flex-col items-center justify-center z-50 bg-black bg-opacity-50">
-          {/* <div className="bg-white rounded-lg z-10 flex flex-col p-2"> */}
 
           <div className="bg-red-200 p-12 rounded-lg justify-center">
             <h3 className='text-center text-green-700'>Select</h3>
@@ -476,7 +411,6 @@ function ManageTournaments() {
             </div>
 
           </div>
-
           <div className='mt-2'>
             <button
               className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg w-full md:w-80 lg:w-96 xl:w-112"
@@ -485,7 +419,6 @@ function ManageTournaments() {
             </button>
 
           </div>
-          {/* </div> */}
         </div>}
 
       <div style={{ filter: matches ? "blur(30px)" : "none" }}>
@@ -501,11 +434,9 @@ function ManageTournaments() {
                         <div className="flex items-center">
                           {item.status === true ? (
                             <svg className="w-14 h-11 rounded-full p-2 border border-green-200 text-blue-400 bg-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                             </svg>
                           ) : (
                             <svg className="w-14 h-11 rounded-full p-2 border border-red-200 text-blue-400 bg-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              {/* <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path> */}
                             </svg>
                           )}
                           <div className="flex flex-col ml-3 w-full">
@@ -556,8 +487,7 @@ function ManageTournaments() {
                                 <span className="transition duration-300">{item.secondteam.teamname}</span>
                               </div>
                             </div>
-                            <button className=' px-6 py-1 border-2 border-gray-950 rounded-xl hover:text-white text-yellow-300' onClick={()=>{mangingTickets(item)}}>Manage</button>
-
+                            <button className=' px-6 py-1 border-2 border-gray-950 rounded-xl hover:text-white text-yellow-300' onClick={() => { mangingTickets(item) }}>Manage</button>
                           </div>
                           <img className="absolute bottom-2 right-6 w-[6rem] transition duration-300 group-hover:scale-[1.4]" src={yellowimg} alt="" />
                         </div>
@@ -570,8 +500,6 @@ function ManageTournaments() {
           </div>
         </div>
       )}
-
-
 
 
     </div>

@@ -11,14 +11,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function Navbar({ data }) {
 
   const userdatas = useSelector((state) => (data === 'club' ? state.club : state.user));
-  console.log(userdatas, "koi")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-
-
   const logout = (user) => {
-    console.log(user, "koiiu")
     user === 'user' ?
       dispatch(
         setUserDetails({
@@ -44,7 +40,6 @@ function Navbar({ data }) {
   };
 
   const home = (user) => {
-    console.log(user, "hihohiohihoih")
     if (user === 'club') {
       navigate("/club/home", { state: userdatas.isUser })
     } else {

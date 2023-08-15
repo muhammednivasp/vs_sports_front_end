@@ -13,11 +13,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 
 
 function Signup() {
-
   const [user, setUser] = useState([]);
   const [profile, setProfile] = useState(null);
-  // const [msg,setMsg]=useState("")
-
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log('Login Failed:', error)
@@ -34,19 +31,14 @@ function Signup() {
             }
           })
           .then((res) => {
-            // console.log("vannu")
             setProfile({ ...res.data, isUser: 'user' })
-            // console.log(res.data)
             userApi.post('/googlesignup', { ...res.data, isUser: 'user', isGoogle: true }, { withCredentials: true }).then((res) => {
-              // console.log(res,"koikoikoi")
               toast.success(res.data.message);
               setTimeout(() => {
                 navigate('/user/login', { state: 'user' });
               }, 1000);
             }).catch((res) => {
-              // console.log(res)
               toast.error(res.response.data.message);
-
             })
 
           })
@@ -55,9 +47,6 @@ function Signup() {
     },
     [user]
   );
-  console.log(profile)
-
-
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -107,21 +96,14 @@ function Signup() {
     try {
       const { data } = await userApi.post('/signup', value, { withCredentials: true });
 
-
-      console.log(data, "datassss")
       if (data) {
         if (data.errors) {
           toast.error(data.message);
         } else {
           toast.success(data.message);
-          // setTimeout(() => {
-          //   navigate('/user/login',{ state: isClub });
-          // }, 1000);
-          // setMsg(res.message)
         }
       }
     } catch (error) {
-      console.log(error, "kiokipk")
       toast.error(error.response.data.message);
     }
   };
@@ -133,33 +115,24 @@ function Signup() {
         <h1 className="text-white text-3xl md:text-4xl font-semibold pb-6">User Signup</h1>
 
         <div className="flex flex-col items-center m-4">
-          {/* <label className="text-white text-lg md:text-xl font-semibold mb-2" htmlFor="email">E-mail:</label> */}
           <input className="bg-white hover:bg-opacity-60 text-black text-center font-normal py-2 px-4 rounded-full mb-4 w-80 md:w-96 placeholder-black placeholder-opacity-100" type="text" id="name" name="name" value={value.name} placeholder="Enter your name" onChange={handleChange} />
 
-          {/* <label className="text-white text-lg md:text-xl font-semibold mb-2" htmlFor="email">E-mail:</label> */}
           <input className="bg-white hover:bg-opacity-60 text-black text-center font-normal py-2 px-4 rounded-full mb-4 w-80 md:w-96 placeholder-black placeholder-opacity-100" type="email" id="email" name="email" value={value.email} placeholder="Enter your email Id" onChange={handleChange} />
 
-          {/* <label className="text-white text-lg md:text-xl font-semibold mb-2" htmlFor="email">E-mail:</label> */}
           <input className="bg-white hover:bg-opacity-60 text-black text-center font-normal py-2 px-4 rounded-full mb-4 w-80 md:w-96 placeholder-black placeholder-opacity-100" type="number" id="number" name="phonenumber" value={value.phonenumber} placeholder="Enter your phonenumber" onChange={handleChange} />
 
-          {/* <label className="text-white text-lg md:text-xl font-semibold mb-2" htmlFor="password">Password:</label> */}
           <input className="bg-white hover:bg-opacity-60 text-black text-center font-normal py-2 px-4 rounded-full mb-4 w-80 md:w-96 placeholder-black placeholder-opacity-100 " type="password" id="password" name="password" value={value.password} placeholder="Enter your password" onChange={handleChange} />
 
         </div>
 
         <button className="bg-gray-400 hover:bg-white text-lg text-black hover:text-green-500 font-bold py-2 px-6 rounded-full mb-6" type='submit' onClick={addUser}>SUBMIT</button>
 
-
-        {/* <h3 className="text-white mb-2 mx-5">Not a member ! <a href="#" className="text-blue-800 font-bold mx-2 text-lg hover:text-red-900 hover:text-xl">Register Now...</a></h3> */}
-
         <div className="flex items-center">
           <h3 className="text-white mr-2">OR Continue With</h3>
 
           <button onClick={() => login()}><img src={googlelogo} alt="Logo" className="h-4 w-4 md:h-8 md:w-8" /></button>
-          {/* <a href='#'><img src={googlelogo} alt="Logo" className="h-4 w-4 md:h-8 md:w-8" /></a> */}
         </div>
         <button onClick={() => already()} className="text-white font-bold mx-2 text-lg hover:text-yellow-400 hover:text-xl">Already have an account</button>
-
 
       </div>
     </div>
