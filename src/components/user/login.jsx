@@ -157,6 +157,7 @@ function Login() {
 
       if (data) {
         if (data.errors) {
+          console.log(data.errors);
           toast.error(data.message);
         } else {
           toast.success(data.message);
