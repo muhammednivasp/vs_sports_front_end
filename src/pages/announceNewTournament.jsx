@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
+import Loader from '../components/loader/loader';
 
 function AnnounceTournament() {
   const clubdatas = useSelector((state) => state.club);
@@ -15,6 +16,8 @@ function AnnounceTournament() {
 
   const dispatch = useDispatch()
   const Navigate = useNavigate()
+  
+  const [loader, setLoader] = useState(true);
 
   const [value, setValue] = useState({
     tournamentname: '',
@@ -82,55 +85,60 @@ function AnnounceTournament() {
   };
 
   return (
+    <div className='justify-center'>
+      {setTimeout(() => {
+        setLoader(false)
+      }, 1000)}
+      {loader ? <Loader /> :
+        <div className="min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${background})` }}>
+          <Navbar data={'club'} />
+          <div className="container mx-auto ">
+            <div className=" flex flex-col items-center justify-center pt-32">
+              <h2 className="text-2xl text-blue-700 font-bold ">Announce a Tournament</h2>
 
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat relative" style={{ backgroundImage: `url(${background})` }}>
-      <Navbar data={'club'} />
-      <div className="container mx-auto ">
-        <div className=" flex flex-col items-center justify-center pt-32">
-          <h2 className="text-2xl text-blue-700 font-bold ">Announce a Tournament</h2>
-
-          <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12 xm:w-9/12 xs:w-9/12 bg-white bg-opacity-50 rounded-lg flex flex-col justify-between items-center m-10">
-
-
-            <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="text" id="tournamentname" name="tournamentname" placeholder="Enter Tournament Name" onChange={handleChange}></input>
-
-            <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="text" id="location" name="location" placeholder="Enter Tournament Location" onChange={handleChange}></input>
-
-            <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="number" id="fee" name="fee" placeholder="Tounament Fee" onChange={handleChange}></input>
-
-            <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="number" id="teamsrequired" name="teamsrequired" placeholder="Teams Required" onChange={handleChange}></input>
+              <div className="w-full md:w-9/12 lg:w-9/12 xl:w-9/12 xm:w-9/12 xs:w-9/12 bg-white bg-opacity-50 rounded-lg flex flex-col justify-between items-center m-10">
 
 
-            <select className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" id="category" name="category" onChange={handleChange}>
-              <option value="">Select Category</option>
-              <option className='text-black font-medium' value="League">League</option>
-              <option className='text-black font-medium' value="Nockout">Nockout</option>
-              <option className='text-black font-medium' value="Combo">Combo</option>
-            </select>
+                <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="text" id="tournamentname" name="tournamentname" placeholder="Enter Tournament Name" onChange={handleChange}></input>
 
-            <div >
-              <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
-                minDate={tomorrow}
-                placeholderText={selectedDate != null ? { selectedDate } : "Select Last Date"}
-                dateFormat="yyyy-MM-dd"
-                className="w-full md:w-12/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900"
-              />
+                <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="text" id="location" name="location" placeholder="Enter Tournament Location" onChange={handleChange}></input>
+
+                <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="number" id="fee" name="fee" placeholder="Tounament Fee" onChange={handleChange}></input>
+
+                <input className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" type="number" id="teamsrequired" name="teamsrequired" placeholder="Teams Required" onChange={handleChange}></input>
+
+
+                <select className="w-full md:w-11/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900" id="category" name="category" onChange={handleChange}>
+                  <option value="">Select Category</option>
+                  <option className='text-black font-medium' value="League">League</option>
+                  <option className='text-black font-medium' value="Nockout">Nockout</option>
+                  <option className='text-black font-medium' value="Combo">Combo</option>
+                </select>
+
+                <div >
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    minDate={tomorrow}
+                    placeholderText={selectedDate != null ? { selectedDate } : "Select Last Date"}
+                    dateFormat="yyyy-MM-dd"
+                    className="w-full md:w-12/12 bg-gray-200 p-4 rounded-lg mt-8 text-center text-black text-opacity-100 placeholder-gray-900"
+                  />
+                </div>
+
+                <div className="flex justify-end mt-4">
+                  <button className="w-32 h-8 md:w-48 md:h-12 bg-white text-black font-bold rounded-md m-2 md:m-4 " onClick={() => savechanges()} >
+                    ADD
+                  </button>
+
+                </div>
+
+              </div>
             </div>
-
-            <div className="flex justify-end mt-4">
-              <button className="w-32 h-8 md:w-48 md:h-12 bg-white text-black font-bold rounded-md m-2 md:m-4 " onClick={() => savechanges()} >
-                ADD
-              </button>
-
-            </div>
-
           </div>
         </div>
-      </div>
+      }
     </div>
-
   )
 }
 

@@ -24,7 +24,7 @@ function Home() {
     <div className='justify-center'>
     {setTimeout(()=>{
       setLoader(false)
-   },500)}
+   },1000)}
     {loader?<Loader/> :
     <div className="flex flex-col min-h-custom bg-cover bg-center bg-no-repeat relative " style={{ backgroundImage: `url(${bgimage})` }}>
 

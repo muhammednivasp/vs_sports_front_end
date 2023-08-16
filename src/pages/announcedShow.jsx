@@ -4,11 +4,11 @@ import child from '../assets/images/player/child.jpg'
 import bgimage from '../assets/images/bg/backgroundvssports.jpg'
 import toast from 'react-hot-toast'
 import { clubApi } from '../utils/api';
-
 import Navbar from '../components/navbar/navbar'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import DatePicker from 'react-datepicker';
+import Loader from '../components/loader/loader';
 
 function AnnouncedShow() {
 
@@ -17,6 +17,7 @@ function AnnouncedShow() {
 
   const Navigate = useNavigate()
   const location = useLocation()
+  const [loader, setLoader] = useState(true);
 
   const data = location.state
   const id = data._id
@@ -83,7 +84,11 @@ function AnnouncedShow() {
   }
 
   return (
-
+  <div className='justify-center'>
+    {setTimeout(()=>{
+      setLoader(false)
+   },1000)}
+    {loader?<Loader/> :
     <div className="min-h-screen relative">
       <div
         className=" inset-0 bg-cover bg-center min-h-screen pt-24"
@@ -189,6 +194,8 @@ function AnnouncedShow() {
         </div>
       )}
 
+    </div>
+      }
     </div>
   )
 }

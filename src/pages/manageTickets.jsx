@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { userApi, clubApi } from '../utils/api';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast'
+import Loader from '../components/loader/loader';
 
 function ManageTickets() {
 
@@ -15,6 +16,7 @@ function ManageTickets() {
 
     const [ticket, setTickets] = useState([])
     const [temp, setTemp] = useState('')
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         const gettickets = async () => {
@@ -36,6 +38,11 @@ function ManageTickets() {
     }
 
     return (
+        <div className='justify-center'>
+        {setTimeout(()=>{
+          setLoader(false)
+       },1000)}
+        {loader?<Loader/> :
         <div className="min-h-screen bg-gray-100 py-9 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})` }}>
             <Navbar data='club' />
             <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
@@ -100,8 +107,9 @@ function ManageTickets() {
                 </div>
             </div>
         </div>
-
-    );
+       }
+    </div>
+  );
 }
 
 export default ManageTickets

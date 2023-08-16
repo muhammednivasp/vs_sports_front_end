@@ -15,7 +15,7 @@ import pngwing from '../assets/images/player/pngwing.com.png'
 import toast from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-
+import Loader from '../components/loader/loader';
 import { clubApi } from '../utils/api';
 
 function ManageTournaments() {
@@ -29,6 +29,7 @@ function ManageTournaments() {
   const [tournamentModal, setTournamentModal] = useState(false);
   const [statusModal, setStatusModal] = useState(false);
   const [ticketModal, setTicketModal] = useState(false)
+  const [loader, setLoader] = useState(true);
 
   const AnnounceTournament = () => {
     Navigate("/club/announce")
@@ -150,6 +151,11 @@ function ManageTournaments() {
   }
 
   return (
+    <div className='justify-center'>
+    {setTimeout(()=>{
+      setLoader(false)
+   },1000)}
+    {loader?<Loader/> :
     <div className="min-h-screen relative">
       <div className=" inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})`, filter: isModalOpen || addModal || tournamentModal || matches ? "blur(30px)" : "none" }}>
         <Navbar data={'club'} />
@@ -501,9 +507,9 @@ function ManageTournaments() {
         </div>
       )}
 
-
     </div>
-
+    }
+  </div>
   )
 }
 

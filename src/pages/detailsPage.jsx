@@ -8,6 +8,7 @@ import { clubApi } from '../utils/api';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loader from '../components/loader/loader';
 
 function DetailsPage() {
   const Navigate = useNavigate();
@@ -15,6 +16,7 @@ function DetailsPage() {
 
   const [details, setDetails] = useState([]);
   const [datasOf, setDatasOf] = useState({});
+  const [loader, setLoader] = useState(true);
 
   let { datas } = location.state;
 
@@ -40,6 +42,11 @@ function DetailsPage() {
   };
 
   return (
+    <div className='justify-center'>
+    {setTimeout(()=>{
+      setLoader(false)
+   },1000)}
+    {loader?<Loader/> :
     <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})` }}>
       <Navbar data='club' />
       <div className="w-full items-center text-center m-4 pt-12">
@@ -123,6 +130,8 @@ function DetailsPage() {
         </div>
       </div>
     </div>
+    }
+</div>
   );
 };
 
