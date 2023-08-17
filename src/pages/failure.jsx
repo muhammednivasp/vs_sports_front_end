@@ -13,7 +13,6 @@ function Failure() {
 
   const [user, setUser] = useState('')
   const [data, setData] = useState('')
-
   const location = useLocation();
 
   useEffect(() => {
@@ -25,6 +24,8 @@ function Failure() {
         const parsedData = JSON.parse(decodeURIComponent(data));
         setData(parsedData._doc)
         setUser(parsedData.isUser)
+  console.log(parsedData,"parsed");
+
 
       } catch (error) {
         console.error(error);
