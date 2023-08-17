@@ -16,6 +16,9 @@ function ShowAnnounced() {
   const data = location.state
   const Id = data?._id 
   const isUser = data.isUser
+  console.log(data,"iiiii");
+  console.log(isUser,"iiiii");
+
 
   const clubdatas = useSelector((state) => state[isUser === 'user' ? 'user' : 'club']);
 
