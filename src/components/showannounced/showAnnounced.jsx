@@ -62,11 +62,9 @@ function ShowAnnounced() {
       [name]: value,
     }));
   };
-  console.log(values, "jyjyj");
 
   const handlePayment = async () => {
     const { clubname, location, phonenumber, registration } = values
-    console.log(clubname, "ytythtt");
     if (clubname.trim() === '' || location.trim() === '' ||  registration.trim() === '') {
       return toast.error('All fields are required');
     }
@@ -74,9 +72,7 @@ function ShowAnnounced() {
       return toast.error('Phone number should be need ten digits');
     }
     try {
-      console.log("log");
       const response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment', { ...values })
-      console.log(response, "llllll");
       if (response.status === 202) {
         console.log(response);
         const datas = response?.data?.order;

@@ -22,7 +22,7 @@ function Failure() {
     if (data) {
       try {
         const parsedData = JSON.parse(decodeURIComponent(data));
-        setData(parsedData._doc)
+        setData(parsedData)
         setUser(parsedData.isUser)
   console.log(parsedData,"parsed");
 
@@ -35,8 +35,8 @@ function Failure() {
 
   const Goback = () => {
     return user === 'user'
-      ? Navigate(`/user/show`, { state: { ...data, isUser: user } })
-      : Navigate(`/club/show`, { state: { ...data, isUser: user } });
+      ? Navigate(`/user/show`, { state: { ...data} })
+      : Navigate(`/club/show`, { state: { ...data} });
   }
 
   return (

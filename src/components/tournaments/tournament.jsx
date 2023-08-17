@@ -1,10 +1,5 @@
 
 import React, { useEffect, useState, useRef } from 'react';
-// import playerimg from '../../assets/images/player/portrait.jpg';
-// import child from '../../assets/images/player/child.jpg';
-// import yellowplayer from '../../assets/images/player/yellowplayer.png';
-// import groupplayer from '../../assets/images/player/groupplayer.png';
-// import bgimage from '../../assets/images/bg/backgroundvssports.jpg';
 import withball from '../../assets/images/player/withball.png';
 import Loader from '../loader/loader';
 
@@ -83,7 +78,6 @@ function Tournament({ data }) {
     Navigate(data === 'user' ? '/user/show' : '/club/show', { state: { ...item, isUser: data } })
 
   }
- 
 
 
   return (
