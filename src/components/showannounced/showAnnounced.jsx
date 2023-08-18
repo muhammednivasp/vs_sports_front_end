@@ -85,6 +85,7 @@ function ShowAnnounced() {
       }
 
       if (response.data.url) {
+        console.log(response.data.url,"koko");
         window.location.href = response.data.url;
       }
     } catch (error) {
