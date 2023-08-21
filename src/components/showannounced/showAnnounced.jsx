@@ -51,7 +51,7 @@ function ShowAnnounced() {
     location: '',
     phonenumber: '',
     registration: '',
-    announcementid: Id,
+    announcementid:id,
     isUser: isUser,
     userId: clubdatas.id,
     amount: data.fee,
