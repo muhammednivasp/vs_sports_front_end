@@ -67,7 +67,7 @@ function ShowAnnounced() {
   };
 
   const handlePayment = async () => {
-    const { clubname, location, phonenumber, registration } = values
+    const { clubname, location, phonenumber, registration,isUser} = values
     if (clubname.trim() === '' || location.trim() === '' ||  registration.trim() === '') {
       return toast.error('All fields are required');
     }
@@ -76,18 +76,41 @@ function ShowAnnounced() {
     }
     try {
       const response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment', { ...values })
-      if (response.status === 202) {
-        console.log(response);
+      // if (response.status === 202) {
+      //   console.log(response);
+      //   const datas = response?.data?.order;
+      //   return isUser === 'user'
+      //     ? Navigate(`/user/successpage`, { state: datas })
+      //     : Navigate(`/club/successpage`, { state: datas });
+      // }
         const datas = response?.data?.order;
+console.log(response,"gggg")
+      // if(response.status){
+      //   return isUser === 'user'
+      //       ? Navigate(`/user/failure?data=${encodeURIComponent(JSON.stringify(datas))}`)
+      //       : Navigate(`/club/failure?data=${encodeURIComponent(JSON.stringify(datas))}`);
+
+      // // cancel_url: (isUser === 'user' ? `${process.env.BASE_URL}/user/failure?data=${encodeURIComponent(JSON.stringify(order))}` : `${process.env.BASE_URL}/club/failure?data=${encodeURIComponent(JSON.stringify(order))}`)
+      // }else{
+      // const success_response = await (data.isUser === 'user' ? userApi : clubApi).post(`/payment/${encodeURIComponent(JSON.stringify(...values))}`)
+      const success_response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment',{...values})
+
+      
+      clubname, location, phonenumber, registration, announcementid, isUser, userId, amount
+      console.log(success_response,"fggdfg");
+   
+      if (success_response.status === 202) {
+        const datas = success_response?.data?.order;
         return isUser === 'user'
           ? Navigate(`/user/successpage`, { state: datas })
           : Navigate(`/club/successpage`, { state: datas });
       }
-
-      if (response.data.url) {
-        console.log(response.data.url,"koko");
-        window.location.href = response.data.url;
-      }
+      // success_url: `${process.env.USER_API}/user/payment/${encodeURIComponent(JSON.stringify(values))}`,
+      // }
+      // if (response.data.url) {
+      //   console.log(response.data.url,"koko");
+      //   window.location.href = response.data.url;
+      // }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
