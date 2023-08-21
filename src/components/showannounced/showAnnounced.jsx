@@ -51,7 +51,7 @@ function ShowAnnounced() {
     location: '',
     phonenumber: '',
     registration: '',
-    announcementid:id,
+    announcementid:Id,
     isUser: isUser,
     userId: clubdatas.id,
     amount: data.fee,
@@ -95,8 +95,6 @@ console.log(response,"gggg")
       // const success_response = await (data.isUser === 'user' ? userApi : clubApi).post(`/payment/${encodeURIComponent(JSON.stringify(...values))}`)
       const success_response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment',{...values})
 
-      
-      clubname, location, phonenumber, registration, announcementid, isUser, userId, amount
       console.log(success_response,"fggdfg");
    
       if (success_response.status === 202) {
