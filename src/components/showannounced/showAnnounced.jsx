@@ -97,7 +97,7 @@ console.log(response,"gggg")
 
       console.log(success_response,"fggdfg");
    
-      if (success_response.status === 202) {
+      if (success_response.status === 200) {
         const datas = success_response?.data?.order;
         return isUser === 'user'
           ? Navigate(`/user/successpage`, { state: datas })
