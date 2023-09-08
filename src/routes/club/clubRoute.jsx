@@ -31,6 +31,9 @@ import MyTickets from "../../pages/myTickets";
 import ManageTickets from "../../pages/manageTickets";
 import UpcomingMatches from "../../pages/upcomingMatches";
 import NotFoundPage from "../../pages/notFoundPage";
+import Payment from '../../pages/payment'
+import TicketPayment from "../../pages/ticketPayment";
+
 function ClubRoute() {
 
   return (
@@ -65,6 +68,9 @@ function ClubRoute() {
       <Route path="/ticketshow" element={<ClubProtect><MyTickets/></ClubProtect>} />
       <Route path="/managetickets" element={<ClubProtect><ManageTickets/></ClubProtect>} />
       <Route path="/upcomingpage" element={<ClubProtect><UpcomingMatches/></ClubProtect>} />
+      <Route path="/payment" element={<ClubProtect><Payment/></ClubProtect>} />
+      <Route path="/ticketpayment" element={<ClubProtect><TicketPayment/></ClubProtect>} />
+
 
 
     </Routes>

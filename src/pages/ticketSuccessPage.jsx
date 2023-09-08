@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import image from "../assets/images/logo/logo.png";
 import bgimage from "../assets/images/bg/backgroundvssports.jpg";
-import Footer from '../components/footer/footer';
 import tickimg from '../assets/images/tick/tick.webp'
 import Navbar from '../components/navbar/navbar';
 import { useParams, useLocation } from 'react-router-dom';
@@ -16,17 +14,15 @@ function TicketSuccessPage() {
   const [data, setData] = useState('')
 
   const location = useLocation();
+  const state = location.state
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const data = queryParams.get('data');
-
+    const data = state
     if (data) {
       try {
-        const parsedData = JSON.parse(decodeURIComponent(data));
 
-        setData(parsedData._doc)
-        setUser(parsedData.isUser)
-        setFees(parsedData._doc.fee)
+        setData(data._doc)
+        setUser(data.isUser)
+        setFees(data._doc.fee)
 
       } catch (error) {
         console.error(error);
@@ -45,7 +41,7 @@ function TicketSuccessPage() {
         <Navbar data={user} />
         <img src={tickimg} alt="Logo" className="h-20 w-20 md:h-32 md:w-32" />
         {fees <= 0 ?
-          <h1 style={{ fontFamily: "'Open Sans', sans-serif" }} className="text-blue-500 text-3xl md:text-4xl text-center font-weight:200 pb-2 mt-4">Team Added Successsfully </h1>
+          <h1 style={{ fontFamily: "'Open Sans', sans-serif" }} className="text-blue-500 text-3xl md:text-4xl text-center font-weight:200 pb-2 mt-4"> Successsfull </h1>
           :
           <>
             <h1 style={{ fontFamily: "'Open Sans', sans-serif" }} className="text-blue-500 text-3xl md:text-5xl text-center font-weight:200 pb-2 mt-4">Payment  Successsfull </h1>

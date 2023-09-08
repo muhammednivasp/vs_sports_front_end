@@ -180,7 +180,7 @@ function MatchManage() {
     const dateString = '2023-07-25T06:15:25.900Z';
     const dateObj = new Date(dateString);
     const datePart = dateObj.toISOString().slice(0, 10); // Get the date part (YYYY-MM-DD)
-    const timePart = dateObj.toISOString().slice(11, 19); // Get the time part (HH:mm:ss)
+    const timePart = dateObj.toISOString().slice(11, 16); // Get the time part (HH:mm:ss)
     setItem(item)
     setData({ ...item, date: datePart, time: timePart })
     setScore(item.results?.firstteamscore)
@@ -222,7 +222,9 @@ function MatchManage() {
   };
 
   const onSubmitScorer = () => {
-    {
+    if(values.trim()===''){
+      toast.error("name must not be empty")
+    }else{
       team === 'first' ?
         setScorers([...scorers, values]) :
         setSecondScorers([...secondScorers, values])
@@ -238,14 +240,16 @@ function MatchManage() {
   const submitScore = async () => {
     const response = await clubApi.post('/scorechange', (team === 'first' ? { id: data._id, score: score, scorers: scorers, team: team } : { id: data._id, score: secondScore, scorers: secondScorers, team: team }), { withCredentials: true })
     let newData = response.data.matchResults
-    setData(newData)
+    matchsetup(newData)
+    // setData(newData)
     setScoreModal(false)
   }
 
   const clearAll = async () => {
     const response = await clubApi.post('/scorechange', (team === 'first' ? { id: data._id, score: 0, scorers: [], team: team } : { id: data._id, score: 0, scorers: [], team: team }), { withCredentials: true })
     let newData = response.data.matchResults
-    setData(newData)
+    // setData(newData)
+    matchsetup(newData)
     setScoreModal(false)
     setScore('')
     setScorers([])
@@ -647,10 +651,18 @@ function MatchManage() {
               <div>
                 <input
                   type="text"
+                  pattern='[A-Za-z]+'
                   value={values}
                   className="px-4 py-2 border border-gray-300 rounded-lg w-full md:w-80 lg:w-96 xl:w-112 text-center"
                   placeholder="Enter scorer name"
-                  onChange={handleChange} />
+                  onChange={handleChange} 
+                  onKeyDown={(e) => {
+                    if (/\d/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                
+                  />
               </div>
 
               <div className='mt-2'>
@@ -689,7 +701,9 @@ function MatchManage() {
                   value={team === 'first' ? score : secondScore}
                   className="px-4 py-2 border border-gray-300 rounded-lg w-full md:w-60 lg:w-60 xl:w-100 text-center"
                   placeholder="Enter Score"
-                  onChange={scoreChange} />
+                  onChange={scoreChange}
+                  min={0}
+                  />
               </div>
               <div className='mt-2 flex flex-col'>
                 <button

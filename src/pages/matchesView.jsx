@@ -6,10 +6,12 @@ import Navbar from '../components/navbar/navbar';
 import yellowimg from '../assets/images/player/yellowplayer.png'
 import { clubApi, userApi } from '../utils/api';
 import { useSelector, useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 
 function MatchesView() {
   const location = useLocation()
+  const Navigate = useNavigate()
   const { data, isUser } = location.state
 
   const clubdatas = useSelector((state) => state[isUser === 'user' ? 'user' : 'club']);
@@ -68,16 +70,49 @@ function MatchesView() {
     const { name, value } = e.target;
     setValues(value)
   };
+  // const handlePayment = async () => {
+  //   try {
+  //     const response = await (isUser === 'user' ? userApi : clubApi).post('/ticketpayment', { count: values, isUser: isUser, clubdatas: clubdatas, match: match })
+  //     if (response.status === 202) {
+  //       const datas = response?.data?.order;
+  //     }
+  //     if (response.data.url) {
+  //       window.location.href = response.data.url;
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // }
+
   const handlePayment = async () => {
-    try {
-      const response = await (isUser === 'user' ? userApi : clubApi).post('/ticketpayment', { count: values, isUser: isUser, clubdatas: clubdatas, match: match })
-      if (response.status === 202) {
-        const datas = response?.data?.order;
-      }
-      if (response.data.url) {
-        window.location.href = response.data.url;
-      }
+    // const { clubname, location, phonenumber, registration, isUser } = values
+    // if (clubname.trim() === '' || location.trim() === '' || registration.trim() === '') {
+    //   return toast.error('All fields are required');
+    // }
+    // if (phonenumber.trim().length !== 10) {
+    //   return toast.error('Phone number should be need ten digits');
+    // }
+    // try {
+    //   if (data.fee === 0) {
+        try {
+    //  const response = await (isUser === 'user' ? userApi : clubApi).post('/ticketpayment', { count: values, isUser: isUser, clubdatas: clubdatas, match: match })
+
+          // const response = await (isUser === 'user' ? userApi : clubApi).post('/paymentsuccess', { ...datas });
+          // console.log(response,"llooo");
+          // console.log(datas.isUser, "lkl");
+          // datas.isUser === 'user'
+            // ? Navigate(`/user/successpage`, { state: response.data.datas })
+            // : Navigate(`/club/successpage`, { state: response.data.datas });
+      //   } catch (apiError) {
+      //     setMessage("An error occurred while processing your payment.");
+      //   }
+      // } else {
+        isUser === 'user'
+          ? Navigate(`/user/ticketpayment`, { state: { count: values, isUser: isUser, clubdatas: clubdatas, match: match } })
+          : Navigate(`/club/ticketpayment`, { state: { count: values, isUser: isUser, clubdatas: clubdatas, match: match } });
+      // }
     } catch (error) {
+      console.log(error);
       toast.error(error.message);
     }
   }
@@ -202,14 +237,14 @@ function MatchesView() {
             >
               Close
             </button>
-            {(datas.matchstatus === true && datas.tickets != 0) ?
+            {((datas.matchstatus === true )&& (datas.tickets !== 0) )?(
               <button
                 className="mt-4 m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 onClick={() => tickets(item)}
               >
                 Tickets
               </button>
-              : ''
+             ) : ''
             }
           </div>
         </div>

@@ -14,10 +14,10 @@ function ShowAnnounced() {
   const location = useLocation()
 
   const data = location.state
-  const Id = data?._id 
+  const Id = data?._id
   const isUser = data.isUser
-  console.log(data,"iiiii");
-  console.log(isUser,"iiiii");
+  console.log(data, "iiiii,gregeg");
+  console.log(isUser, "iiiii");
 
 
   const clubdatas = useSelector((state) => state[isUser === 'user' ? 'user' : 'club']);
@@ -26,21 +26,6 @@ function ShowAnnounced() {
 
   const [modal, setModal] = useState(false)
   const [limit, setLimit] = useState(data.teamsrequired)
-
-  useEffect(() => {
-    const limitcheck = async () => {
-      try {
-        const { data } = await clubApi.post('/limit', { id })
-        setLimit(data.details.teamsrequired)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    limitcheck()
-
-  },[limit])
-
-
 
   const AddTeams = () => {
     setModal(true)
@@ -51,13 +36,13 @@ function ShowAnnounced() {
     location: '',
     phonenumber: '',
     registration: '',
-    announcementid:Id,
+    announcementid: Id,
     isUser: isUser,
     userId: clubdatas.id,
     amount: data.fee,
 
   })
-
+  const datas = values
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((prevValues) => ({
@@ -67,54 +52,70 @@ function ShowAnnounced() {
   };
 
   const handlePayment = async () => {
-    const { clubname, location, phonenumber, registration,isUser} = values
-    if (clubname.trim() === '' || location.trim() === '' ||  registration.trim() === '') {
+    const { clubname, location, phonenumber, registration, isUser } = values
+    if (clubname.trim() === '' || location.trim() === '' || registration.trim() === '') {
       return toast.error('All fields are required');
     }
-    if(phonenumber.trim().length !== 10 ){
+    if (phonenumber.trim().length !== 10) {
       return toast.error('Phone number should be need ten digits');
     }
     try {
-      const response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment', { ...values })
-      // if (response.status === 202) {
-      //   console.log(response);
-      //   const datas = response?.data?.order;
-      //   return isUser === 'user'
-      //     ? Navigate(`/user/successpage`, { state: datas })
-      //     : Navigate(`/club/successpage`, { state: datas });
-      // }
-        const datas = response?.data?.order;
-console.log(response,"gggg")
-      // if(response.status){
-      //   return isUser === 'user'
-      //       ? Navigate(`/user/failure?data=${encodeURIComponent(JSON.stringify(datas))}`)
-      //       : Navigate(`/club/failure?data=${encodeURIComponent(JSON.stringify(datas))}`);
+      if (data.fee === 0) {
+        try {
+          const response = await (isUser === 'user' ? userApi : clubApi).post('/paymentsuccess', { ...datas });
+          console.log(datas.isUser, "lkl");
+          datas.isUser === 'user'
+            ? Navigate(`/user/successpage`, { state: response.data.datas })
+            : Navigate(`/club/successpage`, { state: response.data.datas });
+        } catch (apiError) {
+          setMessage("An error occurred while processing your payment.");
+        }
+      } else {
+        isUser === 'user'
+          ? Navigate(`/user/payment`, { state: values })
+          : Navigate(`/club/payment`, { state: values });
 
-      // // cancel_url: (isUser === 'user' ? `${process.env.BASE_URL}/user/failure?data=${encodeURIComponent(JSON.stringify(order))}` : `${process.env.BASE_URL}/club/failure?data=${encodeURIComponent(JSON.stringify(order))}`)
-      // }else{
-      // const success_response = await (data.isUser === 'user' ? userApi : clubApi).post(`/payment/${encodeURIComponent(JSON.stringify(...values))}`)
-      const success_response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment',{...values})
+        // const response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment', { ...values })
+        // if (response.status === 202) {
+        //   console.log(response);
+        //   const datas = response?.data?.order;
+        //   return isUser === 'user'
+        //     ? Navigate(`/user/successpage`, { state: datas })
+        //     : Navigate(`/club/successpage`, { state: datas });
+        // }
+        // const datas = response?.data?.order;
+        //  console.log(response,"gggg")
+        // if(response.status){
+        //   return isUser === 'user'
+        //       ? Navigate(`/user/failure?data=${encodeURIComponent(JSON.stringify(datas))}`)
+        //       : Navigate(`/club/failure?data=${encodeURIComponent(JSON.stringify(datas))}`);
 
-      console.log(success_response,"fggdfg");
-   
-      if (success_response.status === 200) {
-        const datas = success_response?.data?.order;
-        return isUser === 'user'
-          ? Navigate(`/user/successpage`, { state: datas })
-          : Navigate(`/club/successpage`, { state: datas });
+        // // cancel_url: (isUser === 'user' ? `${process.env.BASE_URL}/user/failure?data=${encodeURIComponent(JSON.stringify(order))}` : `${process.env.BASE_URL}/club/failure?data=${encodeURIComponent(JSON.stringify(order))}`)
+        // }else{
+        // const success_response = await (data.isUser === 'user' ? userApi : clubApi).post(`/payment/${encodeURIComponent(JSON.stringify(...values))}`)
+        // const success_response = await (data.isUser === 'user' ? userApi : clubApi).post('/payment',{...values})
+
+        // console.log(success_response,"fggdfg");
+
+        // if (success_response.status === 200) {
+        //   const datas = success_response?.data?.order;
+        //   return isUser === 'user'
+        //     ? Navigate(`/user/successpage`, { state: datas })
+        //     : Navigate(`/club/successpage`, { state: datas });
+        // }
+        // success_url: `${process.env.USER_API}/user/payment/${encodeURIComponent(JSON.stringify(values))}`,
+        // }
+        // if (response.data.url) {
+        //   console.log(response.data.url,"koko");
+        //   window.location.href = response.data.url;
+        // }
       }
-      // success_url: `${process.env.USER_API}/user/payment/${encodeURIComponent(JSON.stringify(values))}`,
-      // }
-      // if (response.data.url) {
-      //   console.log(response.data.url,"koko");
-      //   window.location.href = response.data.url;
-      // }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   }
- 
+
 
   return (
     <div className="min-h-screen relative">
@@ -124,7 +125,7 @@ console.log(response,"gggg")
       >
         <Navbar data={isUser} />
         <h1 className="text-center font-bold text-blue-600 text-4xl pt-24 pb-8">Details</h1>
-  
+
         <div className="flex justify-center items-center h-full">
           <div className="w-full sm:w-2/3 md:w-2/5 lg:w-2/5 px-4">
             <div className="mb-2">
@@ -132,7 +133,7 @@ console.log(response,"gggg")
                 className="bg-card-bg bg-cover bg-center text-white p-12 rounded-lg  w-full h-full"
                 style={{ backgroundImage: `url(${child})` }}
               >
-  
+
                 <h1 className='text-lg font-semibold'>Tournament</h1>
                 <span className="bg-green-600 h-12 mb-4 bg-opacity-60 flex items-center text-xl justify-center">{data.tournamentname}</span>
                 <h1 className='text-lg font-semibold'>Location</h1>
@@ -154,13 +155,13 @@ console.log(response,"gggg")
                     <h1 className='text-xl text-yellow-400 font-medium text-center m-2'>Teams are filled !</h1>
                   )}
                 </div>
-  
+
               </div>
             </div>
           </div>
         </div>
       </div>
-  
+
       {modal && (
         <div className="inset-0 fixed flex justify-center items-center">
           <div className="w-full sm:w-1/2 lg:w-2/5 px-4">
@@ -175,7 +176,7 @@ console.log(response,"gggg")
                 <h1 className="text-center font-bold text-xl text-yellow-300">
                   Add Team
                 </h1>
-  
+
                 <h1 className="text-lg font-semibold">Club Name</h1>
                 <input
                   className="bg-green-600 h-12 mb-4 bg-opacity-60 flex items-center text-xl justify-center w-full px-2"
@@ -186,23 +187,23 @@ console.log(response,"gggg")
                   className="bg-green-600 h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center w-full px-2"
                   type='text' name='location' placeholder='Location'
                   onChange={handleChange} />
-  
+
                 <h1 className="text-lg font-semibold">Phone Number</h1>
-  
+
                 <input
                   className="bg-green-600 h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center w-full px-2"
-                  type='number' name='phonenumber' placeholder='phonenumber' min={0} 
+                  type='number' name='phonenumber' placeholder='phonenumber' min={0}
                   onChange={handleChange} />
-  
+
                 <h1 className="text-lg font-semibold">Registration Number</h1>
-  
+
                 <input
                   className="bg-green-600 h-12 mb-4 bg-opacity-60 items-center flex text-xl justify-center w-full px-2"
                   type='number' name='registration' placeholder='registration'
                   onChange={handleChange} />
-  
+
                 <h1 className="text-lg font-semibold text-center text-blue-400 m-2"><span className='text-white'>Fee : </span>{data.fee}</h1>
-  
+
                 <div className="flex justify-center">
                   <button className="bg-white text-gray-800 px-4 py-2 m-2 rounded-lg w-40 font-semibold text-lg hover:text-red-400 hover:tracking-wider" onClick={() => handlePayment()}>
                     Pay Fee Now

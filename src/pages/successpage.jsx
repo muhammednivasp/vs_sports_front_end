@@ -10,28 +10,25 @@ import { useParams, useLocation } from 'react-router-dom';
 
 function SuccessPage() {
   const Navigate = useNavigate()
+  const location = useLocation();
+  const datas = location.state
+  console.log(datas,'fromsucccess');
+  
   const [user, setUser] = useState('')
   const [fees, setFees] = useState('')
   const [data, setData] = useState('')
 
-  const location = useLocation();
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const data = queryParams.get('data');
-    if (data) {
-      try {
-        const parsedData = JSON.parse(decodeURIComponent(data));
-        setData(parsedData._doc)
-        setUser(parsedData.isUser)
-        setFees(parsedData._doc.fee)
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, [location.search]);
 
+  useEffect(() => {
+    if (datas) {
+      setData(datas._doc);
+      setUser(datas.isUser);
+      setFees(datas._doc.fee);
+    }
+  }, [datas]);
+console.log(user,"userrrrr");
   const Goback = () => {
-    return user === 'user'
+       user === 'user'
       ? Navigate(`/user/show`, { state: { ...data, isUser: user } })
       : Navigate(`/club/show`, { state: { ...data, isUser: user } });
   }

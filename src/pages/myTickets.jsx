@@ -52,7 +52,7 @@ function MyTickets() {
         <div className="min-h-screen bg-gray-100 py-9 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgimage})` }}>
             <Navbar data={isUser} />
             <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
-                <div className= " overflow-hidden shadow-sm sm:rounded-lg h-[50rem] p-4 overflow-y-auto bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${baby})` }}>
+                <div className=" overflow-hidden shadow-sm sm:rounded-lg h-[50rem] p-4 overflow-y-auto bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${baby})` }}>
                     <div className="flex justify-center">
                         <h1 className="lg:text-3xl text-lg font-bold mb-4 text-center fixed left-1/2 transform -translate-x-1/2 text-black z-30">Ticket Details</h1>
                     </div>

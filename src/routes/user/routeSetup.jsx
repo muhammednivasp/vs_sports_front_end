@@ -21,6 +21,9 @@ import MyTickets from "../../pages/myTickets";
 import TicketSuccessPage from "../../pages/ticketSuccessPage"
 import UpcomingMatches from "../../pages/upcomingMatches";
 import NotFoundPage from "../../pages/notFoundPage";
+import Payment from "../../pages/payment";
+import TicketPayment from "../../pages/ticketPayment";
+// import { Payment } from "../../../../Server/controllers/userController";
 
 function UserRoute() {
   return (
@@ -45,6 +48,10 @@ function UserRoute() {
       <Route path="/ticketsuccesspage" element={<UserProtect><TicketSuccessPage/></UserProtect>} />
       <Route path="/ticketshow" element={<UserProtect><MyTickets/></UserProtect>} />
       <Route path="/upcomingpage" element={<UserProtect><UpcomingMatches/></UserProtect>} />
+      <Route path="/payment" element={<UserProtect><Payment/></UserProtect>} />
+      <Route path="/ticketpayment" element={<UserProtect><TicketPayment/></UserProtect>} />
+
+
 
       
     </Routes>
